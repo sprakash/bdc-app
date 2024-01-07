@@ -1,26 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div v-if="records">
+    <h1>Airtable Records</h1>
+    <ul>
+      <li v-for="record in records" :key="record">
+        {{ record }}
+      </li>
+    </ul>
+  </div>
+  <div v-else-if="error">Error fetching records: {{ error }}</div>
+  <div v-else>Loading...</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from "vue";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  setup() {
+    const records = ref(null);
+    const error = ref(null);
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+    const fetchRecords = async () => {
+      try {
+        const url = `http://localhost:3000/airtable-records`;
+
+        console.log(" URL ", url);
+
+        const response = await fetch(url);
+        const data = await response.json();
+        records.value = data;
+      } catch (error) {
+        console.error("Error fetching records:", error);
+        error.value = error.message;
+      }
+    };
+
+    fetchRecords();
+
+    return { records, error };
+  },
+};
+</script>
