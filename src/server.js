@@ -11,7 +11,7 @@ app.get("/airtable-records", async (req, res) => {
   // eslint-disable-next-line no-debugger
   debugger;
   try {
-    const airtableUrl = `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/${process.env.AIRTABLE_TABLE_ID}`;
+    const airtableUrl = `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/${process.env.AIRTABLE_FILMS_TABLE_ID}`;
     const headers = {
       method: "GET",
       Authorization: `Bearer ${process.env.AIRTABLE_ACCESS_TOKEN}`,
