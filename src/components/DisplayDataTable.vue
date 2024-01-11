@@ -8,9 +8,6 @@
     <v-data-table :headers="headers" :items="records">
       <template #item="{ item }">
         <div v-if="dataType === 'film'">
-          <!-- <router-link @click="navigateToFilmDetail(item)">{{
-            item.fields.Name
-          }}</router-link> -->
           {{ item.fields.Name }}
         </div>
         <div v-if="dataType === 'filmmaker'">

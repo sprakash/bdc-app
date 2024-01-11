@@ -4,13 +4,14 @@ require("dotenv").config();
 
 const app = express();
 const port = 3000; // Or any available port
+const AIRTABLE_BASE_URL = `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}`;
 
 app.use(cors()); // Enable CORS for all routes
 
 //apiRequest a single function can be called to execute requests.
 app.get("/filmmaker-records", async (req, res) => {
   return apiRequest(
-    `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/${process.env.AIRTABLE_FILMMAKERS_TABLE_ID}`,
+    `${AIRTABLE_BASE_URL}/${process.env.AIRTABLE_FILMMAKERS_TABLE_ID}`,
     req,
     res
   );
@@ -18,7 +19,7 @@ app.get("/filmmaker-records", async (req, res) => {
 
 app.get("/film-records", async (req, res) => {
   return apiRequest(
-    `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/${process.env.AIRTABLE_FILMS_TABLE_ID}`,
+    `${AIRTABLE_BASE_URL}/${process.env.AIRTABLE_FILMS_TABLE_ID}`,
     req,
     res
   );
