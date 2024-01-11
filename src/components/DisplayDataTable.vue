@@ -10,11 +10,8 @@
 
       <template #item="{ item }">
         <div>
-          <a
-            :href="item.fields.Website"
-            target="_blank"
-            class="link-primary font-bold text-lg"
-            >{{ item.fields.Name }}</a
+          <router-link :to="{ name: 'filmdetail', params: { id: item.id } }">
+            {{ item.fields.Name }}</router-link
           >
           <div
             class="bg-blue-100 p-3 mb-5 w-full flex"
