@@ -7,7 +7,6 @@
     <v-btn text to="/films">Films</v-btn>
     <v-btn text to="/donate">Donate</v-btn>
     <v-btn text to="/faqs">FAQs</v-btn>
-
     <v-spacer />
 
     <ul class="connect flex">

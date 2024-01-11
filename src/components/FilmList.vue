@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h6>FILM LISTS</h6>
+    <h6>FILMMAKERS LISTS</h6>
     <div v-if="filmRecords">
-      <DisplayDataTable :records="filmRecords" />
+      <DisplayDataTable :records="filmRecords" dataType="film" />
     </div>
     <div v-else-if="error">Error fetching records: {{ error }}</div>
     <div v-else>Loading...</div>
@@ -16,7 +16,7 @@ export default {
   setup() {
     const filmRecords = ref(null);
     const error = ref(null);
-    const fetchRecords = async () => {
+    const getFilms = async () => {
       try {
         const url = `http://localhost:3000/film-records`;
         console.log(" URL ", url);
@@ -28,7 +28,7 @@ export default {
         error.value = error.message;
       }
     };
-    fetchRecords();
+    getFilms();
     return { filmRecords, error };
   },
   components: { DisplayDataTable },

@@ -1,11 +1,14 @@
+// main.js
 import { createApp } from "vue";
 import App from "./App.vue";
-import VueRouter from "vue-router";
-import router from "./router"; // Import your router configuration
 import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
-import "@/index.css"; // Assuming index.css is in your project's root
+import "@/index.css";
+import router from "./router"; // Import the router instance directly
 
 loadFonts();
 
-createApp(App).use(VueRouter).use(vuetify).use(router).mount("#app");
+const app = createApp(App);
+app.use(vuetify);
+app.use(router); // Use the router instance directly
+app.mount("#app");

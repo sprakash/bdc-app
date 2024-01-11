@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h6>FILM LISTS</h6>
+    <h6>FILMMAKERS LISTS</h6>
     <div v-if="filmmakerRecords">
-      <DisplayDataTable :records="filmmakerRecords" />
+      <DisplayDataTable :records="filmmakerRecords" dataType="filmmaker" />
     </div>
     <div v-else-if="error">Error fetching records: {{ error }}</div>
     <div v-else>Loading...</div>
