@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h6>FILMMAKERS LISTS</h6>
     <div v-if="filmmakerRecords">
       <DisplayDataTable :records="filmmakerRecords" dataType="filmmaker" />
     </div>
