@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <v-data-table :headers="headers" :items="records">
+    <v-data-table :headers="headers" :items="records" class="d-flex">
       <template #item="{ item }">
         <div v-if="dataType === 'film'">
           <v-card class="mx-auto p-3 m-5" max-width="300">
@@ -163,5 +163,11 @@ export default {
 }
 .card-sub {
   color: white;
+}
+
+tbody {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 </style>
