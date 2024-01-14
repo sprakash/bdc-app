@@ -2,8 +2,9 @@
   <div>
     <v-row>
       <v-spacer />
-      <v-pagination v-model="page" :length="totalPages" />
     </v-row>
+    <p>Total Records: {{ props?.records.length }}</p>
+    <p>Data Type: {{ props?.dataType }}</p>
     <div>
       <div v-if="dataType === 'film'">
         <div class="p-3">
@@ -23,26 +24,24 @@
             <div class="grid-container">
               <div class="grid-item">
                 <div class="poster-container">
-                  <a href="#">
-                    <v-img
-                      :src="item.fields.Poster[0].thumbnails.large.url"
-                      class="poster align-center"
-                      cover
-                    />
-                    <div class="overlay">
-                      <div class="text">
-                        <v-card-title>{{ item.fields.Name }}</v-card-title>
-                        <v-card-text class="text-justify">{{
-                          item.fields.Summary
-                        }}</v-card-text>
-                        <v-card-subtitle
-                          ><a href="#" class="card-sub"
-                            >LEARN MORE >></a
-                          ></v-card-subtitle
-                        >
-                      </div>
+                  <v-img
+                    :src="item.fields.Poster[0].thumbnails.large.url"
+                    class="poster align-center"
+                    cover
+                  />
+                  <div class="overlay">
+                    <div class="text">
+                      <v-card-title>{{ item.fields.Name }}</v-card-title>
+                      <v-card-text class="text-justify">{{
+                        item.fields.Summary
+                      }}</v-card-text>
+                      <v-card-subtitle @click="navigateToFilmDetail(item.id)"
+                        ><span class="card-sub"
+                          >LEARN MORE >></span
+                        ></v-card-subtitle
+                      >
                     </div>
-                  </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -72,8 +71,7 @@
   </div>
 </template>
 <script>
-import { useStore } from "vuex";
-import { useRouter } from "vue-router"; // Import router
+import { useRouter } from "vue-router";
 export default {
   props: {
     records: {
@@ -85,37 +83,39 @@ export default {
       required: true,
     },
   },
-  data() {
+  setup(props) {
+    console.log(props);
+    const headers = [
+      { text: "Name", value: "fields.Name" },
+      { text: "Website", value: "Website" },
+      { text: "Bio", value: "fields.Bio" },
+      { text: "Headshot", value: "Headshot" },
+    ];
+
+    const selectedSubject = "";
+    const subjects = ["African American", "Politics", "Biography"]; // sample genres
+
+    /* eslint-disable no-unused-vars */
+    const router = useRouter();
+
+    // const itemsPerPage = 10;
+
+    // const totalPages = Math.ceil(props.records.length / itemsPerPage);
+
     return {
-      headers: [
-        { text: "Name", value: "fields.Name" },
-        { text: "Website", value: "Website" },
-        { text: "Bio", value: "fields.Bio" },
-        { text: "Headshot", value: "Headshot" },
-      ],
-      selectedSubject: "", // initially, no genre selected
-      subjects: ["African American", "Politics", "Biography"], // sample genres
-      page: 1, // Initial page number
+      headers,
+      selectedSubject,
+      subjects,
     };
   },
-  computed: {
-    totalPages() {
-      return Math.ceil(this.records.length / this.itemsPerPage); // Assuming a fixed itemsPerPage
-    },
-  },
   methods: {
-    navigateToFilmDetail(item) {
-      const store = useStore();
-      store.commit("setSelectedFilm", item);
-      const router = useRouter(); // Use router within the method
-      router.push({ name: "filmdetail" });
-    },
-    mounted() {
-      console.log(" this is mounted as ", this.dataType);
+    navigateToFilmDetail(filmId) {
+      this.$router.push({ name: "filmdetail", params: { id: filmId } });
     },
   },
 };
 </script>
+
 <style>
 .headshot {
   width: 250px;
