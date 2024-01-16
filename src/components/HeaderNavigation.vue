@@ -7,7 +7,9 @@
     <v-btn
       text
       to="/films"
-      :class="{ active: route.name === 'films' || route.name === 'filmdetail' }"
+      :class="{
+        'v-btn--active': route.name === 'films' || route.name === 'filmdetail',
+      }"
       >Films</v-btn
     >
     <v-btn text to="/donate">Donate</v-btn>
@@ -36,3 +38,4 @@ export default {
   },
 };
 </script>
+<style scoped></style>
