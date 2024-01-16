@@ -35,7 +35,8 @@
                       <v-card-text class="text-justify">{{
                         item.fields.Summary
                       }}</v-card-text>
-                      <v-card-subtitle @click="navigateToFilmDetail(item.id)"
+                      <v-card-subtitle
+                        @click="item ? navigateToFilmDetail(item) : false"
                         ><span class="card-sub"
                           >LEARN MORE >></span
                         ></v-card-subtitle
@@ -71,7 +72,9 @@
   </div>
 </template>
 <script>
+import { useFilmStore } from "@/stores/filmStore";
 import { useRouter } from "vue-router";
+
 export default {
   props: {
     records: {
@@ -85,6 +88,7 @@ export default {
   },
   setup(props) {
     console.log(props);
+
     const headers = [
       { text: "Name", value: "fields.Name" },
       { text: "Website", value: "Website" },
@@ -98,20 +102,23 @@ export default {
     /* eslint-disable no-unused-vars */
     const router = useRouter();
 
-    // const itemsPerPage = 10;
+    const itemsPerPage = 10;
+    const totalPages = Math.ceil(props.records.length / itemsPerPage);
+    const filmStore = useFilmStore(); // Access filmStore here
 
-    // const totalPages = Math.ceil(props.records.length / itemsPerPage);
+    const navigateToFilmDetail = (film) => {
+      filmStore.setSelectedFilm(film); // Use filmStore directly
+      router.push({ name: "filmdetail", params: { id: film.id } });
+    };
 
     return {
       headers,
       selectedSubject,
       subjects,
+      itemsPerPage,
+      totalPages,
+      navigateToFilmDetail,
     };
-  },
-  methods: {
-    navigateToFilmDetail(filmId) {
-      this.$router.push({ name: "filmdetail", params: { id: filmId } });
-    },
   },
 };
 </script>
@@ -169,5 +176,9 @@ tbody {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+}
+
+.v-card-subtitle {
+  cursor: pointer;
 }
 </style>

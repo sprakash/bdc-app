@@ -22,13 +22,15 @@
 
 <script>
 import HeaderNavigation from "@/components/HeaderNavigation.vue";
+import { useFilmStore } from "@/stores/filmStore";
 import { useRouter } from "vue-router";
 
 export default {
   components: { HeaderNavigation },
   setup() {
+    const filmStore = useFilmStore(); // Access filmStore here
     const router = useRouter();
-    return { router };
+    return { router, filmStore };
   },
 };
 </script>
