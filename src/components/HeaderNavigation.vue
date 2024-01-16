@@ -4,7 +4,12 @@
     <v-spacer />
     <v-btn text to="/">Home</v-btn>
     <v-btn text to="/filmmakers">Filmmakers</v-btn>
-    <v-btn text to="/films">Films</v-btn>
+    <v-btn
+      text
+      to="/films"
+      :class="{ active: route.name === 'films' || route.name === 'filmdetail' }"
+      >Films</v-btn
+    >
     <v-btn text to="/donate">Donate</v-btn>
     <v-btn text to="/faqs">FAQs</v-btn>
     <v-spacer />
@@ -18,3 +23,16 @@
     </ul>
   </v-toolbar>
 </template>
+<script>
+import { useRoute } from "vue-router";
+
+export default {
+  setup() {
+    const route = useRoute();
+
+    return {
+      route,
+    };
+  },
+};
+</script>
