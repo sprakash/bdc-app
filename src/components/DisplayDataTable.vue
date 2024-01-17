@@ -49,7 +49,11 @@
           </v-card>
         </div>
         <div v-if="dataType === 'filmmaker'">
-          <v-card class="m-5" max-width="350">
+          <v-card
+            class="m-5"
+            max-width="350"
+            @click="item ? navigateToFilmmakerDetail(item) : false"
+          >
             <div class="" v-if="item.fields?.Headshot?.length > 0">
               <v-img
                 :src="item.fields?.Headshot[0].url"
@@ -73,6 +77,7 @@
 </template>
 <script>
 import { useFilmStore } from "@/stores/filmStore";
+import { useFilmmakerStore } from "@/stores/filmmakerStore";
 import { useRouter } from "vue-router";
 
 export default {
@@ -105,10 +110,16 @@ export default {
     const itemsPerPage = 10;
     const totalPages = Math.ceil(props.records.length / itemsPerPage);
     const filmStore = useFilmStore(); // Access filmStore here
+    const filmmakerStore = useFilmmakerStore();
 
     const navigateToFilmDetail = (film) => {
       filmStore.setSelectedFilm(film); // Use filmStore directly
       router.push({ name: "filmdetail", params: { id: film.id } });
+    };
+
+    const navigateToFilmmakerDetail = (filmmaker) => {
+      filmmakerStore.setSelectedFilmmaker(filmmaker);
+      router.push({ name: "filmmakerDetail", params: { id: filmmaker.id } });
     };
 
     return {
@@ -118,6 +129,7 @@ export default {
       itemsPerPage,
       totalPages,
       navigateToFilmDetail,
+      navigateToFilmmakerDetail,
     };
   },
 };
