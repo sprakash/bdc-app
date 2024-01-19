@@ -66,13 +66,13 @@ export default {
     const filmStore = useFilmStore();
     const tab = ref("about");
     const directorName = filmStore?.selectedFilm?.fields["Name (from Director)"]
-      .toString()
+      ?.toString()
       .replace("[", "")
       .replace("]", "")
       .replace('"', "");
 
     const filmYear = filmStore?.selectedFilm?.fields["Name (from Year)"]
-      .toString()
+      ?.toString()
       .replace("[", "")
       .replace("]", "")
       .replace('"', "");
