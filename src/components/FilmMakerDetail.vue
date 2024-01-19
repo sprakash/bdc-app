@@ -9,15 +9,15 @@
 
     <v-card-text>
       <v-window v-model="tab">
-        <v-window-item value="about">
+        <v-window-item value="about" :transition="false">
           {{ filmmakerStore.selectedFilmmaker.fields.Bio }}
         </v-window-item>
 
-        <v-window-item value="roles">
+        <v-window-item value="roles" :transition="false">
           {{ filmmakerStore.selectedFilmmaker.fields["Name (from Roles)"][0] }}
         </v-window-item>
 
-        <v-window-item value="tags">
+        <v-window-item value="tags" :transition="false">
           {{
             filmmakerStore.selectedFilmmaker.fields["Other Languages/Skills"][0]
           }}
