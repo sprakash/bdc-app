@@ -3,23 +3,25 @@
     <v-row>
       <v-col
         ><v-img
-          :src="filmStore.selectedFilm.fields.Poster[0].thumbnails.large.url"
+          :src="
+            filmStore?.selectedFilm?.fields?.Poster[0]?.thumbnails?.large?.url
+          "
           class="poster align-center"
           cover
       /></v-col>
       <v-col>
-        <h1 class="text-xl">{{ filmStore.selectedFilm.fields.Name }}</h1>
+        <h1 class="text-xl">{{ filmStore?.selectedFilm?.fields?.Name }}</h1>
         <h2 class="pb-3">
           Directed by
           {{ directorName }}
         </h2>
         <blockquote class="py-3">
-          {{ filmStore.selectedFilm.fields.Summary }}
+          {{ filmStore?.selectedFilm?.fields?.Summary }}
         </blockquote>
         <h3>Year : {{ filmYear }}</h3>
         <div>
           Festival Premiere :
-          {{ filmStore.selectedFilm.fields["Festival Premiere"] }}
+          {{ filmStore?.selectedFilm?.fields["Festival Premiere"] }}
         </div>
         <a :href="filmTrailerLink" target="_blank" class="py-3">
           <v-btn density="compact" class="bg-purple-200">watch trailer</v-btn>
@@ -38,15 +40,15 @@
     <v-card-text>
       <v-window v-model="tab">
         <v-window-item value="about" :transition="false">
-          {{ filmStore.selectedFilm.fields.Name }}
+          {{ filmStore?.selectedFilm?.fields?.Name }}
         </v-window-item>
 
         <v-window-item value="filmmakerBio" :transition="false">
-          {{ filmStore.selectedFilm.fields.Summary }}
+          {{ filmStore?.selectedFilm?.fields?.Summary }}
         </v-window-item>
 
         <v-window-item value="resources" :transition="false">
-          {{ filmStore.selectedFilm.fields.Tags }}
+          {{ filmStore?.selectedFilm?.fields?.Tags }}
         </v-window-item>
 
         <v-window-item value="photoGallery" :transition="false">
@@ -63,19 +65,19 @@ export default {
   setup() {
     const filmStore = useFilmStore();
     const tab = ref("about");
-    const directorName = filmStore.selectedFilm.fields["Name (from Director)"]
+    const directorName = filmStore?.selectedFilm?.fields["Name (from Director)"]
       .toString()
       .replace("[", "")
       .replace("]", "")
       .replace('"', "");
 
-    const filmYear = filmStore.selectedFilm.fields["Name (from Year)"]
+    const filmYear = filmStore?.selectedFilm?.fields["Name (from Year)"]
       .toString()
       .replace("[", "")
       .replace("]", "")
       .replace('"', "");
 
-    const filmTrailerLink = `http://${filmStore.selectedFilm.fields.Trailer}`;
+    const filmTrailerLink = `http://${filmStore?.selectedFilm?.fields?.Trailer}`;
     return {
       filmStore,
       tab,
