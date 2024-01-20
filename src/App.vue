@@ -34,3 +34,8 @@ export default {
   },
 };
 </script>
+<style>
+.v-slide-group__content {
+  background-color: #892482;
+}
+</style>

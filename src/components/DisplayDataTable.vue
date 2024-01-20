@@ -32,12 +32,14 @@
                   <div class="overlay">
                     <div class="text">
                       <v-card-title>{{ item.fields.Name }}</v-card-title>
-                      <v-card-text class="text-justify">{{
+                      <v-card-text class="text-justify truncate">{{
                         item.fields.Summary
                       }}</v-card-text>
                       <v-card-subtitle
                         @click="item ? navigateToFilmDetail(item) : false"
-                        ><span class="card-sub"
+                        class="px-3 py-5"
+                        ><span
+                          class="card-sub rounded-md text-black font-semibold px-5 py-2"
                           >LEARN MORE >></span
                         ></v-card-subtitle
                       >
@@ -165,15 +167,15 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #008cba;
+  background-color: #892482;
   overflow: hidden;
   width: 100%;
   height: 0;
   transition: 0.5s ease;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 .poster-container:hover .overlay {
-  height: 100%;
+  height: 75%;
 }
 .text {
   color: white;
@@ -181,7 +183,7 @@ export default {
   text-align: left;
 }
 .card-sub {
-  color: white;
+  background-color: #fdd81b;
 }
 
 tbody {
@@ -192,5 +194,14 @@ tbody {
 
 .v-card-subtitle {
   cursor: pointer;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  white-space: pre-wrap;
 }
 </style>
