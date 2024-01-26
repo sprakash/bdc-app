@@ -8,7 +8,7 @@
     <div>
       <div v-if="dataType === 'film'">
         <div class="p-3">
-          <select v-model="selectedSubject" @change="filterBySubject">
+          <select v-model="selectedSubject" @change="handleChange">
             <option value="">All Subject</option>
             <option v-for="subject in subjects" :key="subject" :value="subject">
               {{ subject }}
@@ -52,25 +52,19 @@
         </div>
         <div v-if="dataType === 'filmmaker'">
           <v-card
-            class="m-5"
+            class="card-size m-5"
             max-width="350"
             @click="item ? navigateToFilmmakerDetail(item) : false"
           >
             <div class="" v-if="item.fields?.Headshot?.length > 0">
-              <v-img
-                :src="item.fields?.Headshot[0].url"
-                class="align-end"
-                max-width="350"
-                max-height="300"
-                cover
-              >
+              <v-img :src="item.fields?.Headshot[0].url" class="headshot" cover>
               </v-img>
               <v-card-title> {{ item.fields.Name }}</v-card-title>
-              <v-card-text class="text-justify" max-height="300">{{
+              <v-card-text class="text-justify">{{
                 item.fields.Bio
               }}</v-card-text>
-              <!-- <v-card-subtitle>{{ items.fields.Subject%20of%20Films}}</v-card-subtitle> -->
-            </div></v-card
+              <v-chip class="ma-3" color="pink" label>{{items?.fields["Subject of Films"]}}</v-chip>
+          </div></v-card
           >
         </div>
       </template>
@@ -139,21 +133,9 @@ export default {
 
 <style>
 .headshot {
-  width: 250px;
-  height: 250px;
+  width: 350px;
+  height: 350px;
 }
-/* .grid-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  place-items: center;
-}
-
-.grid-item {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: center;
-} */
 .poster {
   width: 300px;
   height: 300px;
@@ -203,5 +185,9 @@ tbody {
   display: flex;
   flex-wrap: wrap;
   white-space: pre-wrap;
+}
+
+.card-size {
+  height: 850px;
 }
 </style>
