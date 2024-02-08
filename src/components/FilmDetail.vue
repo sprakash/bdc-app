@@ -77,7 +77,7 @@ export default {
       .replace("]", "")
       .replace('"', "");
 
-    const filmTrailerLink = `http://${filmStore?.selectedFilm?.fields?.Trailer}`;
+    const filmTrailerLink = `${filmStore?.selectedFilm?.fields?.Trailer}`;
     return {
       filmStore,
       tab,
