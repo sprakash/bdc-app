@@ -63,8 +63,10 @@
               <v-card-text class="text-justify">{{
                 item.fields.Bio
               }}</v-card-text>
-              <v-chip class="ma-3" color="pink" label>{{items?.fields["Subject of Films"]}}</v-chip>
-          </div></v-card
+              <v-chip class="ma-3" color="pink" label>{{
+                items?.fields["Subject of Films"]
+              }}</v-chip>
+            </div></v-card
           >
         </div>
       </template>
@@ -110,12 +112,26 @@ export default {
 
     const navigateToFilmDetail = (film) => {
       filmStore.setSelectedFilm(film); // Use filmStore directly
-      router.push({ name: "filmdetail", params: { id: film.id } });
+      router.push({
+        name: "filmdetail",
+        params: { name: formattedName(film.fields?.Name) },
+      });
     };
 
     const navigateToFilmmakerDetail = (filmmaker) => {
       filmmakerStore.setSelectedFilmmaker(filmmaker);
-      router.push({ name: "filmmakerDetail", params: { id: filmmaker.id } });
+      router.push({
+        name: "filmmakerDetail",
+        params: { name: formattedName(filmmaker.fields?.Name) },
+      });
+    };
+
+    const formattedName = (name) => {
+      // Transform film name to lowercase and separate by dashes
+      return name
+        .trim() // Remove leading/trailing whitespace
+        .toLowerCase() // Convert to lowercase
+        .replace(/[^a-z0-9-]+/g, "-"); // Replace other characters with hyphens
     };
 
     return {

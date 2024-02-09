@@ -31,28 +31,38 @@
   </v-container>
   <v-card>
     <v-tabs v-model="tab" bg-color="primary">
-      <v-tab value="about">About</v-tab>
-      <v-tab value="filmmakerBio">Filmmaker Bio</v-tab>
-      <v-tab value="resources">Resources & Link</v-tab>
-      <v-tab value="photoGallery">Photo Gallery</v-tab>
+      <v-tab value="subjects">Subjects</v-tab>
+      <v-tab value="producer">Producer</v-tab>
+      <v-tab value="director">Director</v-tab>
+      <v-tab value="editor">Editor</v-tab>
+      <v-tab value="camera">Camera / Cinematopher</v-tab>
     </v-tabs>
 
     <v-card-text>
       <v-window v-model="tab">
-        <v-window-item value="about" :transition="false">
-          {{ filmStore?.selectedFilm?.fields?.Name }}
+        <v-window-item value="subjects" :transition="false">
+          <ul>
+            <li v-for="tag in filmStore?.selectedFilm?.fields?.Tags" :key="tag">
+              <span>{{ tag }}</span>
+            </li>
+          </ul>
+          <!-- {{ filmStore?.selectedFilm?.fields?.Tags }} -->
         </v-window-item>
 
-        <v-window-item value="filmmakerBio" :transition="false">
+        <v-window-item value="producer" :transition="false">
           {{ filmStore?.selectedFilm?.fields?.Summary }}
         </v-window-item>
 
-        <v-window-item value="resources" :transition="false">
+        <v-window-item value="director" :transition="false">
           {{ filmStore?.selectedFilm?.fields?.Tags }}
         </v-window-item>
 
-        <v-window-item value="photoGallery" :transition="false">
+        <v-window-item value="editor" :transition="false">
           test test test
+        </v-window-item>
+
+        <v-window-item value="camera" :transition="false">
+          camera
         </v-window-item>
       </v-window>
     </v-card-text>
@@ -60,11 +70,39 @@
 </template>
 <script>
 import { useFilmStore } from "@/stores/filmStore";
-import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { ref, computed, watch } from "vue";
 export default {
   setup() {
+    const router = useRouter();
     const filmStore = useFilmStore();
-    const tab = ref("about");
+    const filmName = router.params.name;
+    const cachedFilm = ref(null); // Store cached film data
+
+    const film = computed(() => {
+      // Check if film is already cached
+      if (cachedFilm.value && cachedFilm.value.name === filmName.value) {
+        return cachedFilm.value;
+      }
+
+      // Fetch film data if not cached or name changed
+      const film = filmStore.findFilmByName(filmName.value);
+      if (film) {
+        cachedFilm.value = film; // Update cache
+      }
+      return film;
+    });
+
+    // Update filmName on route change (using watch or setup lifecycle hook)
+    watch(
+      () => $route.params.name,
+      (newName) => {
+        filmName.value = newName;
+      }
+    );
+
+    const tab = ref("subjects");
+
     const directorName = filmStore?.selectedFilm?.fields["Name (from Director)"]
       ?.toString()
       .replace("[", "")
@@ -79,6 +117,7 @@ export default {
 
     const filmTrailerLink = `${filmStore?.selectedFilm?.fields?.Trailer}`;
     return {
+      film,
       filmStore,
       tab,
       directorName,

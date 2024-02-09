@@ -11,9 +11,14 @@ const routes = [
     component: FilmList,
   },
   {
-    path: "/filmdetail/:id",
+    path: "/filmdetail/:name",
     name: "filmdetail",
     component: FilmDetail,
+  },
+  {
+    path: "/filmdetail",
+    name: "filmdetailPage",
+    component: FilmList,
   },
   {
     path: "/filmmakers",
@@ -21,7 +26,7 @@ const routes = [
     component: FilmMakers,
   },
   {
-    path: "/filmmakers/:id",
+    path: "/filmmakers/:name",
     name: "filmmakerDetail",
     component: FilmMakerDetail,
   },

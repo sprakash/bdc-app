@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <h1>{{ $route.params.id }}</h1>
+    <h1>{{ $route.params.name }}</h1>
     <v-tabs v-model="tab" bg-color="primary">
       <v-tab value="about">Bio</v-tab>
       <v-tab value="roles">Roles</v-tab>
