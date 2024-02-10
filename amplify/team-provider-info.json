@@ -1,0 +1,31 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplifyfbcfbdd76c474-staging-04701-authRole",
+      "UnauthRoleArn": "arn:aws:iam::891376970246:role/amplify-amplifyfbcfbdd76c474-staging-04701-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::891376970246:role/amplify-amplifyfbcfbdd76c474-staging-04701-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-amplifyfbcfbdd76c474-staging-04701-deployment",
+      "UnauthRoleName": "amplify-amplifyfbcfbdd76c474-staging-04701-unauthRole",
+      "StackName": "amplify-amplifyfbcfbdd76c474-staging-04701",
+      "StackId": "arn:aws:cloudformation:us-east-2:891376970246:stack/amplify-amplifyfbcfbdd76c474-staging-04701/e6f79940-c7ad-11ee-9779-0ad8f1b4f06f",
+      "AmplifyAppId": "d3ct0t1uebc6vx"
+    },
+    "categories": {
+      "function": {
+        "airtablefunction": {
+          "deploymentBucketName": "amplify-amplifyfbcfbdd76c474-staging-04701-deployment",
+          "s3Key": "amplify-builds/airtablefunction-6d5a5a626246622b7575-build.zip",
+          "airtableBaseId": "app2hmj5X3N8NIQhq",
+          "airtableFilmmakersTableId": "tbldScQy0I7Xi8JAK",
+          "airtableFilmsTableId": "tblZCgxg4pjn4h0bv",
+          "airtableAccessToken": "pat81ycJl1oXV8zWi.e7f782cfa2dad6bd067649ce960f6311feb91e95902323f9b27c209145968c34",
+          "baseUrl": "/"
+        }
+      },
+      "api": {
+        "bdcapi": {}
+      }
+    }
+  }
+}

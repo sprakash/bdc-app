@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "paths": {
+    "/filmmaker-records": {
+      "name": "/filmmaker-records",
+      "lambdaFunction": "airtablefunction",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/film-records": {
+      "name": "/film-records",
+      "lambdaFunction": "airtablefunction",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
