@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+const axios = require("axios");
 const app = express();
 const port = 3000; // Or any available port
 const AIRTABLE_BASE_URL = `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}`;
@@ -32,10 +33,12 @@ const apiRequest = async (reqUrl, req, res) => {
       Authorization: `Bearer ${process.env.AIRTABLE_ACCESS_TOKEN}`,
     };
 
-    console.log(" process env ", process.env.AIRTABLE_BASE_ID);
-    console.log(reqUrl, " U R  L ", process.env.AIRTABLE_ACCESS_TOKEN);
-    const response = await fetch(reqUrl, { headers });
-    const data = await response.json();
+    console.log("process env", process.env.AIRTABLE_BASE_ID);
+    console.log(reqUrl, "U R  L", process.env.AIRTABLE_ACCESS_TOKEN);
+
+    // Use Axios to make the request
+    const response = await axios.request({ url: reqUrl, headers });
+    const data = response.data; // Axios already parses JSON
     return res.json(data);
   } catch (error) {
     console.error("Error fetching Airtable records:", error);
