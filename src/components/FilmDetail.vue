@@ -71,7 +71,7 @@
 <script>
 import { useFilmStore } from "@/stores/filmStore";
 import { useRouter } from "vue-router";
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
 export default {
   setup() {
     const router = useRouter();
@@ -80,26 +80,18 @@ export default {
     const cachedFilm = ref(null); // Store cached film data
 
     const film = computed(() => {
-      // Check if film is already cached
+      // Check if film is already
       if (cachedFilm.value && cachedFilm.value.name === filmName.value) {
         return cachedFilm.value;
       }
 
       // Fetch film data if not cached or name changed
       const film = filmStore.findFilmByName(filmName.value);
-      if (film) {
-        cachedFilm.value = film; // Update cache
-      }
+      // if (film) {
+      //   cachedFilm.value = film; // Update cache
+      // }
       return film;
     });
-
-    // Update filmName on route change (using watch or setup lifecycle hook)
-    watch(
-      () => $route.params.name,
-      (newName) => {
-        filmName.value = newName;
-      }
-    );
 
     const tab = ref("subjects");
 

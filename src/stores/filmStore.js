@@ -5,7 +5,9 @@ export const useFilmStore = defineStore("film", {
     selectedFilm: null,
   }),
   getters: {
-    findFilmByName(filmName) {},
+    findFilmByName(filmName) {
+      console.log(filmName, "testing the finding of names");
+    },
   },
   actions: {
     setSelectedFilm(film) {
