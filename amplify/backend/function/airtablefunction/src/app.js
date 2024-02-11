@@ -62,10 +62,16 @@ const apiRequest = async (reqUrl, req, res) => {
     console.log(reqUrl, " U R  L ", process.env.AIRTABLE_ACCESS_TOKEN);
     const response = await axios.request({ url: reqUrl, headers });
     const data = await response.json();
+    console.log("RESPONSE has this data ", data);
     return res.json(data);
   } catch (error) {
+    console.log("THERE IS A PROBLEM");
     console.error("Error fetching Airtable records:", error);
-    res.status(500).json({ error: "Failed to fetch records" });
+    res.status(500).json({
+      error: "Failed to fetch records",
+      detail: error,
+      airtable: AIRTABLE_BASE_URL.process.env.AIRTABLE_FILMMAKERS_TABLE_ID,
+    });
   }
 };
 app.listen(3000, () => {

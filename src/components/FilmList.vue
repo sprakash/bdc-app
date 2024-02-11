@@ -10,10 +10,12 @@
 <script>
 import DisplayDataTable from "@/components/DisplayDataTable.vue";
 import { ref } from "vue";
+import { get } from "aws-amplify/api";
 
 export default {
   setup() {
     const filmRecords = ref(null);
+    const awsFilmRecords = ref(null);
     const error = ref(null);
     const getFilms = async () => {
       try {
@@ -27,9 +29,26 @@ export default {
         error.value = error.message;
       }
     };
+
+    const getFilmsAWS = async () => {
+      try {
+        const restOperation = get({
+          apiName: "bdcapi",
+          path: "/film-records",
+        });
+        const response = await restOperation.response;
+        awsFilmRecords.value = await response.json();
+        console.log("GET call succeeded: ", response);
+      } catch (error) {
+        console.log("GET call failed: ", error);
+      }
+    };
+
+    getFilmsAWS();
     getFilms();
-    return { filmRecords, error };
+    return { awsFilmRecords, filmRecords, error };
   },
+
   components: { DisplayDataTable },
 };
 </script>
