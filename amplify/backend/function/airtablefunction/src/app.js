@@ -59,7 +59,11 @@ const apiRequest = async (reqUrl, req, res) => {
     };
 
     console.log(" process env ", process.env.AIRTABLE_BASE_ID);
-    console.log(reqUrl, " U R  L ", process.env.AIRTABLE_ACCESS_TOKEN);
+    console.log(
+      reqUrl,
+      " U R  L REMOVE this",
+      process.env.AIRTABLE_ACCESS_TOKEN
+    );
     const response = await axios.request({ url: reqUrl, headers });
     const data = await response.json();
     console.log("RESPONSE has this data ", data);
