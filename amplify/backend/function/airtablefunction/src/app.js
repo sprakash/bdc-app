@@ -35,6 +35,13 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.get("/testing", async (req, res) => {
+  return apiRequest(
+    `${AIRTABLE_BASE_URL}/${process.env.AIRTABLE_FILMMAKERS_TABLE_ID}`,
+    req,
+    res
+  );
+});
 app.get("/filmmaker-records", async (req, res) => {
   return apiRequest(
     `${AIRTABLE_BASE_URL}/${process.env.AIRTABLE_FILMMAKERS_TABLE_ID}`,

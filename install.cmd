@@ -22,7 +22,7 @@ set repo_owner=aws-amplify
 set repo_name=amplify-cli
 
 if not defined version (
-    for /f delims^=^"^ tokens^=4 %%g in ('curl -sL https://api.github.com/repos/%repo_owner%/%repo_name%/releases/latest ^| findstr tag_name') do (set version=%%g)
+    for /f delims^=^"^ tokens^=4 %%g in ('curl -sL https://.github.com/repos/%repo_owner%/%repo_name%/releases/latest ^| findstr tag_name') do (set version=%%g)
 )
 
 set exe_name=amplify-pkg-win.exe
