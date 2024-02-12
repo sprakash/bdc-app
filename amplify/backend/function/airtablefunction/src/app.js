@@ -52,7 +52,6 @@ app.get("/film-records", async (req, res) => {
 });
 
 const apiRequest = async (reqUrl, req, res) => {
-  console.log("ide edited");
   try {
     const headers = {
       method: "GET",
