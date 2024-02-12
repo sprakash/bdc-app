@@ -45,6 +45,12 @@
 
       <section class="centered-content mb-12 mt-12">
         <h1 class="header text-black font-bold mb-5">Latest News</h1>
+        <InstagramFeed
+          :count="12"
+          accessToken="IGQWRPRGVEcWVhYjUyS1ZASNlBjREM1Ulh0dzR1RjVNQUlwUmpZAZAWg5ZAGNLcVZAEeDBlT3BhMTFhbzVfT1lrYWwzYlpYRDlSVy1US3pVMWNjdEVPTEwzQ1EtOC1ZAWnNBbG5xZAnZAmc1lyVmdzMkxDRzR3bWcxbEpZAOGcZD"
+          :pagination="true"
+          :caption="true"
+        />
       </section>
 
       <hr />
