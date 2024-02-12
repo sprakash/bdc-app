@@ -36,6 +36,7 @@ app.use(function (req, res, next) {
 });
 
 app.get("/filmmaker-records", async (req, res) => {
+  console.log(" filmmaker - records ", req);
   return apiRequest(
     `${AIRTABLE_BASE_URL}/${process.env.AIRTABLE_FILMMAKERS_TABLE_ID}`,
     req,
@@ -44,6 +45,7 @@ app.get("/filmmaker-records", async (req, res) => {
 });
 
 app.get("/film-records", async (req, res) => {
+  console.log(" film - records ", req);
   return apiRequest(
     `${AIRTABLE_BASE_URL}/${process.env.AIRTABLE_FILMS_TABLE_ID}`,
     req,
@@ -56,22 +58,19 @@ const apiRequest = async (reqUrl, req, res) => {
     const headers = {
       method: "GET",
       Authorization: `Bearer ${process.env.AIRTABLE_ACCESS_TOKEN}`,
+      ContentType: "application/json",
     };
-
-    console.log(" process env ", process.env.AIRTABLE_BASE_ID);
-    console.log(reqUrl, " U R  L ", process.env.AIRTABLE_ACCESS_TOKEN);
     const response = await axios.request({ url: reqUrl, headers });
-    const data = await response.json();
-    console.log("RESPONSE has this data ", data);
-    return res.json(data);
+    // Check response content type if needed
+    if (response.headers["content-type"].includes("json")) {
+      console.log("RESPONSE", response.data);
+      return res.json(response.data);
+    } else {
+      console.error("Response is not JSON:", response.headers["content-type"]);
+    }
   } catch (error) {
-    console.log("THERE IS A PROBLEM");
     console.error("Error fetching Airtable records:", error);
-    res.status(500).json({
-      error: "Failed to fetch records",
-      detail: error,
-      airtable: AIRTABLE_BASE_URL.process.env.AIRTABLE_FILMMAKERS_TABLE_ID,
-    });
+    res.status(500).json({ error: "Failed to fetch records", detail: error });
   }
 };
 app.listen(3000, () => {
