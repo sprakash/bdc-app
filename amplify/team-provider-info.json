@@ -43,7 +43,7 @@
     "categories": {
       "function": {
         "airtablefunction": {
-          "deploymentBucketName": "amplify-amplifyfbcfbdd76c474-staging-04701-deployment",
+          "deploymentBucketName": "amplify-bdcapp-dev-135401-deployment",
           "s3Key": "amplify-builds/airtablefunction-68566835302f447a3832-build.zip",
           "airtableBaseId": "app2hmj5X3N8NIQhq",
           "airtableFilmmakersTableId": "tbldScQy0I7Xi8JAK",
@@ -51,6 +51,9 @@
           "airtableAccessToken": "pat81ycJl1oXV8zWi.e7f782cfa2dad6bd067649ce960f6311feb91e95902323f9b27c209145968c34",
           "baseUrl": "/"
         }
+      },
+      "api": {
+        "bdcapi": {}
       }
     }
   }
