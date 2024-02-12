@@ -1,0 +1,22 @@
+{
+  "permissions": {},
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "airtableBaseId",
+      "environmentVariableName": "AIRTABLE_BASE_ID"
+    },
+    {
+      "cloudFormationParameterName": "airtableFilmmakersTableId",
+      "environmentVariableName": "AIRTABLE_FILMMAKERS_TABLE_ID"
+    },
+    {
+      "cloudFormationParameterName": "airtableFilmsTableId",
+      "environmentVariableName": "AIRTABLE_FILMS_TABLE_ID"
+    },
+    {
+      "cloudFormationParameterName": "airtableAccessToken",
+      "environmentVariableName": "AIRTABLE_ACCESS_TOKEN"
+    }
+  ]
+}

@@ -1,1 +1,60 @@
-{}
+{
+  "function": {
+    "airtablefunction": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_airtablefunction_airtableAccessToken": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "airtablefunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_airtablefunction_airtableBaseId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "airtablefunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_airtablefunction_airtableFilmmakersTableId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "airtablefunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_airtablefunction_airtableFilmsTableId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "airtablefunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_airtablefunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "airtablefunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_airtablefunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "airtablefunction"
+        }
+      ]
+    }
+  }
+}
