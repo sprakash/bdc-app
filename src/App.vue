@@ -5,17 +5,22 @@
 
     <div v-if="$route.path === '/'">
       <section class="text-center">
-        <h1 class="header text-black font-semibold mb-5">
+        <h1 class="header text-black font-semibold mt-10">
           BLACK DOCUMENTARY COLLECTIVE
         </h1>
         <p class="content-text-1 mb-1">
           "I want to do with the documentary what jazz musicians did with
           music."
         </p>
-        <p class="content-text-1 mb-5">- St, Clair Bourne, Founder</p>
+        <p class="content-text-1 mb-10">- St, Clair Bourne, Founder</p>
         <div id="bdc-animated">
           <div id="bdc-remix">
-            <v-img src="@/assets/bdc_recap.gif" alt="bdc remix" />
+            <v-img
+              src="@/assets/bdc_remix.gif"
+              alt="bdc remix"
+              max-width="700"
+              max-height="517"
+            />
           </div>
         </div>
 
@@ -227,7 +232,6 @@ export default {
 #bdc-remix {
   display: inline-block;
   background-color: black;
-  padding: 1em 0;
 }
 #bdc-remix .v-responsive__sizer {
   padding-bottom: 0 !important;
@@ -237,6 +241,8 @@ export default {
 #bdc-remix .v-img__gradient,
 #bdc-remix .v-img__placeholder,
 #bdc-remix .v-img__error {
+  width: 700px;
+  height: 517px;
   position: static !important;
 }
 .v-slide-group__content {
