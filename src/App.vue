@@ -47,7 +47,7 @@
         <h1 class="header text-black font-bold mb-5">Latest News</h1>
         <InstagramFeed
           :count="12"
-          accessToken="IGQWRPRGVEcWVhYjUyS1ZASNlBjREM1Ulh0dzR1RjVNQUlwUmpZAZAWg5ZAGNLcVZAEeDBlT3BhMTFhbzVfT1lrYWwzYlpYRDlSVy1US3pVMWNjdEVPTEwzQ1EtOC1ZAWnNBbG5xZAnZAmc1lyVmdzMkxDRzR3bWcxbEpZAOGcZD"
+          accessToken="IGQWRNdkYxSWRTT1AycU9qbXBrWDcyaXpiRjg4Qzl0OXNUbVVfWkZAnNWdGeHpIM2w3VlRIMjhQZAm1Gcm51NlVKOXVoRWVuQWJWTUNSczBtRnV3cFJVUVlpYlczbTJ2OHVQWXY4YmQ4M1BHd2laLTd4emc4VHU3WTQZD"
           :pagination="true"
           :caption="true"
         />

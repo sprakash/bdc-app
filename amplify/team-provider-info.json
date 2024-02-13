@@ -19,7 +19,7 @@
           "airtableFilmmakersTableId": "tbldScQy0I7Xi8JAK",
           "airtableFilmsTableId": "tblZCgxg4pjn4h0bv",
           "deploymentBucketName": "amplify-bdcapp-main-184102-deployment",
-          "s3Key": "amplify-builds/airtablefunction-757745345a5665304f6e-build.zip"
+          "s3Key": "amplify-builds/airtablefunction-4e7a3271515a6f726d62-build.zip"
         }
       }
     }
