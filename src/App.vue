@@ -1,8 +1,6 @@
 <template>
   <v-app>
     <HeaderNavigation />
-    {{ new Date().toLocaleString() }}
-
     <!-- <div class="font-bold text-sm text-blue-200">Common header content</div> -->
 
     <div v-if="$route.path === '/'">
