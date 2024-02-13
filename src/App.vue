@@ -16,7 +16,7 @@
         <div id="bdc-animated">
           <div id="bdc-remix">
             <v-img
-              src="@/assets/bdc_remix.gif"
+              src="@/assets/bdc_remix_update.gif"
               alt="bdc remix"
               max-width="700"
               max-height="517"
