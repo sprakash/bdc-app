@@ -6,7 +6,7 @@
     <!-- <div class="font-bold text-sm text-blue-200">Common header content</div> -->
 
     <div v-if="$route.path === '/'">
-      <section class="centered-content-1">
+      <section class="text-center">
         <h1 class="header text-black font-semibold mb-5">
           BLACK DOCUMENTARY COLLECTIVE
         </h1>
@@ -15,16 +15,19 @@
           music."
         </p>
         <p class="content-text-1 mb-5">- St, Clair Bourne, Founder</p>
+        <div id="bdc-animated">
+          <div id="bdc-remix">
+            <v-img src="@/assets/bdc_recap.gif" alt="bdc remix" />
+          </div>
+        </div>
 
-        <v-carousel cycle show-arrows="hover" hide-delimiters>
-          <v-carousel-item src="@/assets/gallery1.jpeg" cover></v-carousel-item>
-
+        <!-- <v-carousel cycle show-arrows="hover" hide-delimiters>
           <v-carousel-item src="@/assets/gallery2.jpeg" cover></v-carousel-item>
 
           <v-carousel-item src="@/assets/gallery3.jpeg" cover></v-carousel-item>
 
           <v-carousel-item src="@/assets/gallery4.jpeg" cover></v-carousel-item>
-        </v-carousel>
+        </v-carousel> -->
       </section>
 
       <section class="centered-content mb-12 px-16">
@@ -217,6 +220,27 @@ export default {
 };
 </script>
 <style>
+#bdc-animated {
+  width: 100%;
+  display: inline-block;
+  background: black;
+  margin: 0 0 2em;
+}
+#bdc-remix {
+  display: inline-block;
+  background-color: black;
+  padding: 1em 0;
+}
+#bdc-remix .v-responsive__sizer {
+  padding-bottom: 0 !important;
+}
+#bdc-remix .v-img__img,
+#bdc-remix .v-img__picture,
+#bdc-remix .v-img__gradient,
+#bdc-remix .v-img__placeholder,
+#bdc-remix .v-img__error {
+  position: static !important;
+}
 .v-slide-group__content {
   background-color: #892482;
 }
