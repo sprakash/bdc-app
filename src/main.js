@@ -16,7 +16,6 @@ import { Amplify } from "aws-amplify";
 import config from "./amplifyconfiguration.json";
 
 import InstagramFeed from "vue3-instagram-feed";
-import "vue3-instagram-feed/dist/style.css";
 
 Amplify.configure(config);
 
