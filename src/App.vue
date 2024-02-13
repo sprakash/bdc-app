@@ -232,6 +232,9 @@ export default {
 #bdc-remix {
   display: inline-block;
   background-color: black;
+  background-image: url("./assets/bg_bdc_remix.gif");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 #bdc-remix .v-responsive__sizer {
   padding-bottom: 0 !important;
