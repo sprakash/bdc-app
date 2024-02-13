@@ -280,24 +280,27 @@ export default {
 .instagram-wrapper {
   max-width: 93.5rem;
   margin: 0 auto;
-  padding: 0 2rem;
 }
 .instagram-gallery {
   display: flex;
   flex-wrap: wrap;
   margin: -1rem, -1rem;
-  padding-bottom: 3rem;
 }
 .instagram-gallery-item {
   position: relative;
-  flex: 1 0 22rem;
-  margin: 1rem;
+  flex: 1 0;
+  margin: 0;
   color: #fff;
   cursor: pointer;
+  border: 10px solid;
 }
 .instagram-gallery-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.instagram-gallery-item a {
+  height: 80%;
+  display: block;
 }
 </style>
