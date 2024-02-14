@@ -75,7 +75,7 @@
 
       <section class="centered-content mb-12 mt-12 px-16">
         <h1 class="header text-black font-bold mb-5">Become A Member</h1>
-        <p class="mb-5">
+        <p class="mb-5 text-center">
           Producers, directors, cinematographers, editors, curators,
           distributors and more. They are Emmy winners, Academy members, all
           highly-respected and sought after for keynotes, master classes,
@@ -298,7 +298,7 @@ export default {
 .instagram-wrapper > div:nth-child(2) {
   position: relative;
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
   top: 0;
 }
 
@@ -384,7 +384,7 @@ video .instagram-gallery-image,
   }
 }
 
-@media screen and (max-width: 359px) {
+@media screen and (max-width: 359px) and (orientation: portrait) {
   .v-toolbar__content,
   .v-toolbar__extension {
     flex-direction: column !important;
