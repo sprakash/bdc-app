@@ -31,6 +31,7 @@
                 prefix: 'fab',
                 iconName: 'facebook',
               }"
+              class="fa-2x"
               style="color: #0350a0"
           /></a>
         </li>
@@ -42,7 +43,8 @@
           >
             <font-awesome-icon
               :icon="{ prefix: 'fab', iconName: 'instagram' }"
-              style="color: #d31e2d"
+              class="fa-2x"
+              style="color: #ae176a"
             />
           </a>
         </li>
@@ -54,6 +56,7 @@
           >
             <font-awesome-icon
               :icon="{ prefix: 'fab', iconName: 'twitter' }"
+              class="fa-2x"
               style="color: lightblue"
             />
           </a>
@@ -67,6 +70,7 @@
           >
             <font-awesome-icon
               :icon="{ prefix: 'fab', iconName: 'youtube' }"
+              class="fa-2x"
               style="color: #ed5d29"
             />
           </a>
@@ -79,7 +83,8 @@
           >
             <font-awesome-icon
               :icon="{ prefix: 'fab', iconName: 'linkedin' }"
-              style="color: lightseagreen"
+              class="fa-2x"
+              style="color: #3870bb"
             />
           </a>
         </li>
