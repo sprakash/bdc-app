@@ -62,9 +62,9 @@
           where we post upcoming events and opportunities
         </p>
 
-        <div ref="instagramFeed">
+        <div ref="instagramFeed" id="instagramFeed">
           <InstagramFeed
-            :count="3"
+            :count="5"
             accessToken="IGQWRNdkYxSWRTT1AycU9qbXBrWDcyaXpiRjg4Qzl0OXNUbVVfWkZAnNWdGeHpIM2w3VlRIMjhQZAm1Gcm51NlVKOXVoRWVuQWJWTUNSczBtRnV3cFJVUVlpYlczbTJ2OHVQWXY4YmQ4M1BHd2laLTd4emc4VHU3WTQZD"
             :pagination="true"
           />
@@ -73,31 +73,29 @@
 
       <hr />
 
-      <section class="mb-12 mt-12 px-16">
-        <div>
-          <h1 class="header text-black font-bold mb-5">Become A Member</h1>
-          <p class="mb-5">
-            Producers, directors, cinematographers, editors, curators,
-            distributors and more. They are Emmy winners, Academy members, all
-            highly-respected and sought after for keynotes, master classes,
-            consults, panels, juries and boards. Become part of this community.
-          </p>
-          <h2 class="content-text-2 text-black font-semibold">
-            Connect with members
-          </h2>
-          <p class="mb-5">
-            Keep track of everything at a glance with high-level, multi-project
-            visibility.
-          </p>
-          <h2 class="content-text-2 text-black font-semibold">
-            Learn about the work
-          </h2>
-          <p class="mb-5">
-            Empower your teams to work autonomously, without losing sight of
-            what’s happening.
-          </p>
-          <p class="mb-5"><a href="#">Learn more</a></p>
-        </div>
+      <section class="centered-content mb-12 mt-12 px-16">
+        <h1 class="header text-black font-bold mb-5">Become A Member</h1>
+        <p class="mb-5">
+          Producers, directors, cinematographers, editors, curators,
+          distributors and more. They are Emmy winners, Academy members, all
+          highly-respected and sought after for keynotes, master classes,
+          consults, panels, juries and boards. Become part of this community.
+        </p>
+        <h2 class="content-text-2 text-black font-semibold">
+          Connect with members
+        </h2>
+        <p class="mb-5">
+          Keep track of everything at a glance with high-level, multi-project
+          visibility.
+        </p>
+        <h2 class="content-text-2 text-black font-semibold">
+          Learn about the work
+        </h2>
+        <p class="mb-5">
+          Empower your teams to work autonomously, without losing sight of
+          what’s happening.
+        </p>
+        <p class="mb-5"><a href="#">Learn more</a></p>
         <v-img src="@/assets/meetbdc.jpg" alt="meetbdc" />
       </section>
 
@@ -246,6 +244,7 @@ export default {
   background-image: url("./assets/bg_bdc_remix.gif");
   background-repeat: no-repeat;
   background-position: center;
+  background-size: contain;
 }
 #bdc-remix .v-responsive__sizer {
   padding-bottom: 0 !important;
@@ -288,6 +287,9 @@ export default {
   justify-content: center;
 }
 
+#instagramFeed {
+}
+
 .instagram-wrapper {
   max-width: 93.5rem;
   margin: 0 auto;
@@ -296,7 +298,7 @@ export default {
 .instagram-wrapper > div:nth-child(2) {
   position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   top: 0;
 }
 
@@ -343,19 +345,50 @@ export default {
 video .instagram-gallery-image,
 .instagram-gallery-image {
   width: 100%;
-  height: 300px;
+  height: 250px;
 }
 
 @media screen and (max-width: 900px) {
   video .instagram-gallery-image,
   .instagram-gallery-image {
-    height: 250px;
+    height: 150px;
   }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 780px) {
+  .instagram-gallery-item {
+    border: 5px solid !important;
+  }
+  video .instagram-gallery-image,
+  .instagram-gallery-image {
+    height: 125px;
+  }
+}
+
+@media screen and (max-width: 645px) {
+  .instagram-gallery-item {
+    border: 2px solid !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
   .instagram-gallery {
     flex-direction: column;
+  }
+  video .instagram-gallery-image,
+  .instagram-gallery-image {
+    height: 250px;
+  }
+  .instagram-gallery-item {
+    border: 5px solid !important;
+  }
+}
+
+@media screen and (max-width: 359px) {
+  .v-toolbar__content,
+  .v-toolbar__extension {
+    flex-direction: column !important;
+    height: 100% !important;
   }
 }
 
