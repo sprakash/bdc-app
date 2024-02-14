@@ -9,8 +9,12 @@ import router from "./router";
 import MasonryWall from "@yeger/vue-masonry-wall";
 import { Amplify } from "aws-amplify";
 import config from "./amplifyconfiguration.json";
+
+//github.com/sgoodz/vue3-instagram-feed
 import InstagramFeed from "vue3-instagram-feed";
-import Unicon from "vue-unicons/dist/vue-unicons-vue2.umd"; //https://github.com/antonreshetov/vue-unicons?tab=readme-ov-file
+
+//https://github.com/antonreshetov/vue-unicons?tab=readme-ov-file
+import Unicon from "vue-unicons/dist/vue-unicons-vue2.umd";
 import { uniLayerGroupMonochrome, uniCarWash } from "vue-unicons/dist/icons";
 
 Amplify.configure(config);

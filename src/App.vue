@@ -47,16 +47,28 @@
         </p>
       </section>
 
-      <hr class="" />
+      <hr />
 
       <section class="centered-content mb-12 mt-12">
         <h1 class="header text-black font-bold mb-5">Latest News</h1>
-        <InstagramFeed
-          :count="3"
-          accessToken="IGQWRNdkYxSWRTT1AycU9qbXBrWDcyaXpiRjg4Qzl0OXNUbVVfWkZAnNWdGeHpIM2w3VlRIMjhQZAm1Gcm51NlVKOXVoRWVuQWJWTUNSczBtRnV3cFJVUVlpYlczbTJ2OHVQWXY4YmQ4M1BHd2laLTd4emc4VHU3WTQZD"
-          :pagination="true"
-          :caption="true"
-        />
+        <p class="content-text-2 text-center px-5 mb-5">
+          connect with us on
+          <a
+            href="http://instagram.com/bdcnewyork"
+            target="_blank"
+            class="text-blue"
+            >instagram</a
+          >
+          where we post upcoming events and opportunities
+        </p>
+
+        <div ref="instagramFeed">
+          <InstagramFeed
+            :count="3"
+            accessToken="IGQWRNdkYxSWRTT1AycU9qbXBrWDcyaXpiRjg4Qzl0OXNUbVVfWkZAnNWdGeHpIM2w3VlRIMjhQZAm1Gcm51NlVKOXVoRWVuQWJWTUNSczBtRnV3cFJVUVlpYlczbTJ2OHVQWXY4YmQ4M1BHd2laLTd4emc4VHU3WTQZD"
+            :pagination="true"
+          />
+        </div>
       </section>
 
       <hr />
@@ -207,7 +219,6 @@ export default {
     rules: [
       (value) => {
         if (value) return true;
-
         return "Field must not be empty.";
       },
     ],
@@ -287,6 +298,31 @@ export default {
   display: flex;
   justify-content: space-between;
   top: 0;
+}
+
+.instagram-wrapper div:nth-child(2) div:first-child > button,
+.instagram-wrapper > div:nth-child(2) > div:only-child > button {
+  background-color: white;
+  background-image: url(https://icons.iconarchive.com/icons/icons8/windows-8/512/Arrows-Left-Arrow-icon.png);
+  background-size: contain;
+  background-position: center;
+  color: black;
+  padding: 2em;
+  font-size: 0.25em;
+  border-radius: 5px;
+  border: 0.125em solid grey;
+}
+
+.instagram-wrapper div:nth-child(2) div:last-child > button {
+  background-color: white;
+  background-image: url(https://icons.iconarchive.com/icons/icons8/windows-8/512/Arrows-Right-Arrow-icon.png) !important;
+  background-size: contain;
+  background-position: center;
+  color: black;
+  padding: 2em;
+  font-size: 0.25em;
+  border-radius: 5px;
+  border: 0.125em solid grey;
 }
 
 .instagram-gallery {
