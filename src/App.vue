@@ -281,26 +281,49 @@ export default {
   max-width: 93.5rem;
   margin: 0 auto;
 }
+
+.instagram-wrapper > div:nth-child(2) {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+}
+
 .instagram-gallery {
   display: flex;
   flex-wrap: wrap;
   margin: -1rem, -1rem;
 }
+
 .instagram-gallery-item {
   position: relative;
   flex: 1 0;
   margin: 0;
   color: #fff;
   cursor: pointer;
-  border: 10px solid;
+  border: 8px solid;
 }
+
+video .instagram-gallery-image,
 .instagram-gallery-image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: 300px;
 }
+
+@media screen and (max-width: 900px) {
+  video .instagram-gallery-image,
+  .instagram-gallery-image {
+    height: 250px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .instagram-gallery {
+    flex-direction: column;
+  }
+}
+
 .instagram-gallery-item a {
-  height: 80%;
   display: block;
 }
 </style>
