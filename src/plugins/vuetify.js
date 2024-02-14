@@ -1,6 +1,5 @@
 // Styles
 import "vuetify/styles";
-import "@mdi/font/css/materialdesignicons.css"; // For fallback
 
 // Vuetify
 import { createVuetify } from "vuetify";
