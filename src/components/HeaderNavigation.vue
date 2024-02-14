@@ -106,9 +106,12 @@ export default {
 <style>
 #topNav .v-btn {
   font-size: 1.25em;
+  border-radius: 0;
+  padding: 0 2em;
 }
 
 #topNav .v-btn:hover {
   background-color: #fbe8ff;
+  border-bottom: 2px solid gray;
 }
 </style>
