@@ -107,4 +107,8 @@ export default {
 #topNav .v-btn {
   font-size: 1.25em;
 }
+
+#topNav .v-btn:hover {
+  background-color: #fbe8ff;
+}
 </style>
