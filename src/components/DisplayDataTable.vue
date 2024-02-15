@@ -241,7 +241,7 @@ export default {
   text-align: left;
 }
 .card-sub {
-  background-color: #fdd81b;
+  background-color: #d2c3e1;
 }
 
 table {
@@ -287,11 +287,12 @@ tbody {
   height: auto;
   background-color: black;
   margin: 1.15em;
+  border: 1px solid whitesmoke;
 }
 
 #filmmakers .v-card-title {
   background: whitesmoke;
-  color: blue;
+  color: #8044a7;
   border-top: 1px solid gray;
 }
 
