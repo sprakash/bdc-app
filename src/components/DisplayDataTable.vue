@@ -19,7 +19,7 @@
     </div>
     <v-data-table :headers="headers" :items="records" class="d-flex">
       <template #item="{ item }">
-        <div v-if="dataType === 'film'">
+        <div v-if="dataType === 'film'" id="films">
           <v-card class="mx-auto p-3 m-5" max-width="300">
             <div class="grid-container">
               <div class="grid-item">
@@ -50,10 +50,10 @@
             </div>
           </v-card>
         </div>
-        <div v-if="dataType === 'filmmaker'">
+        <div v-if="dataType === 'filmmaker'" id="filmmakers">
           <v-card
-            class="card-size m-5"
-            max-width="350"
+            class="card-size"
+            max-width="400"
             @click="item ? navigateToFilmmakerDetail(item) : false"
           >
             <div class="" v-if="item.fields?.Headshot?.length > 0">
@@ -186,7 +186,7 @@ export default {
 
 tbody {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -205,5 +205,17 @@ tbody {
 
 .card-size {
   height: 850px;
+}
+
+#filmmakers img.v-img__img.v-img__img--cover,
+#films img.v-img__img.v-img__img--cover {
+  object-fit: contain;
+}
+
+#films .v-card {
+  background-color: black;
+  margin: 0.15em;
+  border-radius: 0;
+  padding: 0;
 }
 </style>

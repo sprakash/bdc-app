@@ -14,8 +14,8 @@
         }"
         >Films</v-btn
       >
-      <v-btn text to="/donate">Donate</v-btn>
       <v-btn text to="/resources">Resources</v-btn>
+      <v-btn text to="/donate">Donate</v-btn>
       <v-spacer />
 
       <!--make this list of social media icons dynamic-->
