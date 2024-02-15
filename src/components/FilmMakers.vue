@@ -17,7 +17,7 @@ export default {
     const error = ref(null);
     const fetchRecords = async () => {
       try {
-        const url = `https://fyt9xw8cih.execute-api.us-east-2.amazonaws.com/staging/filmmaker-records`;
+        const url = `https://egq0zydibl.execute-api.us-east-2.amazonaws.com/main/filmmaker-records`;
         console.log(" URL ", url);
         const response = await fetch(url);
         const data = await response.json();

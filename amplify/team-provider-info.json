@@ -14,13 +14,16 @@
     "categories": {
       "function": {
         "airtablefunction": {
-          "airtableAccessToken": "pat10WfN2fjH0nGRR.36ea7e29d8566c71a323540060b122fe0ee2e46df582e9fe3527a2ba483ce167",
+          "deploymentBucketName": "amplify-bdcapp-main-184102-deployment",
+          "s3Key": "amplify-builds/airtablefunction-4e7a3271515a6f726d62-build.zip",
           "airtableBaseId": "app2hmj5X3N8NIQhq",
           "airtableFilmmakersTableId": "tbldScQy0I7Xi8JAK",
           "airtableFilmsTableId": "tblZCgxg4pjn4h0bv",
-          "deploymentBucketName": "amplify-bdcapp-main-184102-deployment",
-          "s3Key": "amplify-builds/airtablefunction-4e7a3271515a6f726d62-build.zip"
+          "airtableAccessToken": "pat10WfN2fjH0nGRR.36ea7e29d8566c71a323540060b122fe0ee2e46df582e9fe3527a2ba483ce167"
         }
+      },
+      "api": {
+        "bdc101api": {}
       }
     }
   }
