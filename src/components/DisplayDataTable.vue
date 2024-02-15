@@ -48,6 +48,7 @@
                 </div>
               </div>
             </div>
+            //stop grid-container films
           </v-card>
         </div>
         <div v-if="dataType === 'filmmaker'" id="filmmakers">
@@ -56,21 +57,80 @@
             max-width="400"
             @click="item ? navigateToFilmmakerDetail(item) : false"
           >
-            <div class="" v-if="item.fields?.Headshot?.length > 0">
-              <v-img :src="item.fields?.Headshot[0].url" class="headshot" cover>
-              </v-img>
-              <v-card-title> {{ item.fields.Name }}</v-card-title>
-              <v-card-text class="text-justify">{{
+            <div class="grid-container">
+              <div class="grid-item">
+                <div class="poster-container">
+                  <div class="" v-if="item.fields?.Headshot?.length > 0">
+                    <v-img
+                      :src="item.fields?.Headshot[0].url"
+                      class="headshot"
+                      cover
+                    />
+                  </div>
+                  <v-card-title> {{ item.fields.Name }}</v-card-title>
+
+                  <div class="overlay">
+                    <div class="text">
+                      <v-card-title>{{ item.fields.Name }}</v-card-title>
+                      <v-card-text class="text-justify truncate">{{
+                        item.fields.Bio
+                      }}</v-card-text>
+                      <v-card-subtitle
+                        @click="item ? navigateToFilmmakerDetail(item) : false"
+                        class="px-3 py-5"
+                        ><span
+                          class="card-sub rounded-md text-black font-semibold px-5 py-2"
+                          >LEARN MORE >></span
+                        ></v-card-subtitle
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </v-card>
+        </div>
+        <!-- <v-card-text class="text-justify">{{
                 item.fields.Bio
               }}</v-card-text>
               <v-chip class="ma-3" color="pink" label>{{
                 items?.fields["Subject of Films"]
-              }}</v-chip>
-            </div></v-card
-          >
-        </div>
+              }}</v-chip> -->
       </template>
     </v-data-table>
+    <v-card>
+      <v-row class="text-center px-4 align-center" wrap>
+        <v-col class="text-truncate" cols="12" md="2">
+          Total {{ totalPages }} records
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-pagination v-model="page" :length="pageCount"> </v-pagination>
+        </v-col>
+        <v-col cols="6" md="3">
+          <v-select
+            dense
+            outlined
+            hide-details
+            :value="itemsPerPage"
+            label="Items per page"
+            @change="itemsPerPage = parseInt($event, 10)"
+            :items="perPageChoices"
+          >
+          </v-select>
+        </v-col>
+        <v-col cols="6" md="1">
+          <v-text-field
+            v-model="page"
+            label="Go to page"
+            type="number"
+            outlined
+            hide-details
+            dense
+            @input="page = parseInt($event, 10)"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+    </v-card>
   </div>
 </template>
 <script>
@@ -184,10 +244,15 @@ export default {
   background-color: #fdd81b;
 }
 
+table {
+  background-color: black;
+}
+
 tbody {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  background-color: #d696d6;
 }
 
 .v-card-subtitle {
@@ -207,15 +272,38 @@ tbody {
   height: 850px;
 }
 
+#films {
+  margin: 0 0.15em;
+}
+
 #filmmakers img.v-img__img.v-img__img--cover,
 #films img.v-img__img.v-img__img--cover {
   object-fit: contain;
+  border-bottom: 2px solid white;
+}
+
+#filmmakers .v-card {
+  color: whitesmoke;
+  height: auto;
+  background-color: black;
+  margin: 1.15em;
+}
+
+#filmmakers .v-card-title {
+  background: whitesmoke;
+  color: blue;
+  border-top: 1px solid gray;
 }
 
 #films .v-card {
   background-color: black;
   margin: 0.15em;
-  border-radius: 0;
+  border-radius: 35px;
   padding: 0;
+  border: 8px solid white;
+}
+
+#films .v-card .v-card-title {
+  color: yellow;
 }
 </style>
