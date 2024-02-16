@@ -33,9 +33,10 @@ loadFonts();
 const pinia = createPinia();
 const app = createApp(App);
 
+app.use(pinia);
 app.use(vuetify);
 app.use(router); // Use the router instance directly
-app.use(pinia);
+app.component("font-awesome-icon", FontAwesomeIcon);
 app.use(MasonryWall);
 app.use(InstagramFeed);
-app.component("font-awesome-icon", FontAwesomeIcon).mount("#app");
+app.mount("#app");

@@ -3,7 +3,7 @@
     <v-row>
       <v-spacer />
     </v-row>
-    <p>Total Records: {{ props?.records.length }}</p>
+
     <p>Data Type: {{ props?.dataType }}</p>
     <div>
       <div v-if="dataType === 'film'">
@@ -17,7 +17,30 @@
         </div>
       </div>
     </div>
-    <v-data-table :headers="headers" :items="records" class="d-flex">
+    <v-card-title>
+      <v-text-field
+        v-model="search"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field>
+    </v-card-title>
+    <v-card>
+      <v-row class="text-center px-4 align-center" wrap>
+        <v-col class="text-truncate" cols="12" md="2">
+          Total {{ totalRecords }} records
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-pagination v-model="page" :length="pageCount"> </v-pagination>
+        </v-col>
+      </v-row>
+    </v-card>
+    <v-data-table
+      :headers="headers"
+      :items="currentPageRecords"
+      hide-default-footer
+      class="d-flex"
+    >
       <template #item="{ item }">
         <div v-if="dataType === 'film'" id="films">
           <v-card class="mx-auto p-3 m-5" max-width="300">
@@ -67,6 +90,7 @@
                       cover
                     />
                   </div>
+
                   <v-card-title> {{ item.fields.Name }}</v-card-title>
 
                   <div class="overlay">
@@ -101,42 +125,21 @@
     <v-card>
       <v-row class="text-center px-4 align-center" wrap>
         <v-col class="text-truncate" cols="12" md="2">
-          Total {{ totalPages }} records
+          Total {{ totalRecords }} records
         </v-col>
         <v-col cols="12" md="6">
           <v-pagination v-model="page" :length="pageCount"> </v-pagination>
-        </v-col>
-        <v-col cols="6" md="3">
-          <v-select
-            dense
-            outlined
-            hide-details
-            :value="itemsPerPage"
-            label="Items per page"
-            @change="itemsPerPage = parseInt($event, 10)"
-            :items="perPageChoices"
-          >
-          </v-select>
-        </v-col>
-        <v-col cols="6" md="1">
-          <v-text-field
-            v-model="page"
-            label="Go to page"
-            type="number"
-            outlined
-            hide-details
-            dense
-            @input="page = parseInt($event, 10)"
-          ></v-text-field>
         </v-col>
       </v-row>
     </v-card>
   </div>
 </template>
 <script>
+import "@mdi/font/css/materialdesignicons.min.css";
 import { useFilmStore } from "@/stores/filmStore";
 import { useFilmmakerStore } from "@/stores/filmmakerStore";
 import { useRouter } from "vue-router";
+import { computed, ref, watch } from "vue";
 
 export default {
   props: {
@@ -150,8 +153,7 @@ export default {
     },
   },
   setup(props) {
-    console.log(props);
-
+    const search = "";
     const headers = [
       { text: "Name", value: "fields.Name" },
       { text: "Website", value: "Website" },
@@ -165,8 +167,6 @@ export default {
     /* eslint-disable no-unused-vars */
     const router = useRouter();
 
-    const itemsPerPage = 10;
-    const totalPages = Math.ceil(props.records.length / itemsPerPage);
     const filmStore = useFilmStore(); // Access filmStore here
     const filmmakerStore = useFilmmakerStore();
 
@@ -194,12 +194,41 @@ export default {
         .replace(/[^a-z0-9-]+/g, "-"); // Replace other characters with hyphens
     };
 
+    //pagination
+    const page = ref(1); // Initialize page number
+    const itemsPerPage = 10;
+    const totalRecords = computed(() => props.records?.length);
+    const pageCount = computed(() =>
+      Math.ceil(totalRecords.value / itemsPerPage)
+    );
+    const totalPages = Math.ceil(totalRecords.value / itemsPerPage);
+
+    watch(page, async (newPage, oldPage) => {
+      if (newPage !== oldPage) {
+        // Calculate data slice for the new page
+        const start = (newPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const currentRecords = props.records.slice(start, end);
+        // Assign sliced data to a separate property
+        // (e.g., currentPageRecords) for v-data-table
+      }
+    });
+
     return {
+      search,
       headers,
       selectedSubject,
       subjects,
-      itemsPerPage,
+      page,
+      pageCount,
       totalPages,
+      totalRecords,
+      currentPageRecords: computed(() => {
+        // Return sliced data based on page and itemsPerPage
+        const start = (page.value - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        return props.records.slice(start, end);
+      }),
       navigateToFilmDetail,
       navigateToFilmmakerDetail,
     };
@@ -250,6 +279,12 @@ export default {
 }
 .card-sub {
   background-color: #fff;
+  position: relative;
+  top: 8px;
+}
+
+#films .card-sub {
+  top: -12px;
 }
 
 table {
@@ -282,7 +317,7 @@ tbody {
 }
 
 #films {
-  margin: 0 0.15em;
+  margin: 1em;
 }
 
 #filmmakers {
@@ -317,5 +352,8 @@ tbody {
   border-radius: 35px;
   padding: 0;
   border: 8px solid white;
+}
+.v-data-table-footer {
+  display: none;
 }
 </style>
