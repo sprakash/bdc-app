@@ -167,6 +167,11 @@ export default {
       { text: "Headshot", value: "Headshot" },
     ];
 
+    // Data source consistency check (optional)
+    if (!props.records || !props.records.length) {
+      // Handle empty data case
+      return;
+    }
     const selectedSubject = "";
     const subjects = ["African American", "Politics", "Biography"]; // sample genres
 
