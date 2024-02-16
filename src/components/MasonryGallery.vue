@@ -5,7 +5,10 @@
         <v-container fluid>
           <v-row dense>
             <v-col :items="items">
-              <v-card class="card flex items-center justify-center">
+              <v-card
+                class="card flex items-center justify-center"
+                v-transition="{ name: 'v-fade-transition' }"
+              >
                 <v-img
                   src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
                   class="align-end"
@@ -76,3 +79,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.v-enter-active {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+</style>

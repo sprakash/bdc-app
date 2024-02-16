@@ -29,7 +29,7 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-card>
+  <v-card v-transition="{ name: 'v-fade-transition' }">
     <v-tabs v-model="tab" bg-color="primary">
       <v-tab value="subjects">Subjects</v-tab>
       <v-tab value="producer">Producer</v-tab>
@@ -119,4 +119,9 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.v-enter-active {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+</style>

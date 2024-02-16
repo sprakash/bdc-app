@@ -25,7 +25,7 @@
         hide-details
       ></v-text-field>
     </v-card-title>
-    <v-card>
+    <v-card v-transition="{ name: 'v-fade-transition' }">
       <v-row class="text-center px-4 align-center" wrap>
         <v-col class="text-truncate" cols="12" md="2">
           Total {{ totalRecords }} records
@@ -43,7 +43,11 @@
     >
       <template #item="{ item }">
         <div v-if="dataType === 'film'" id="films">
-          <v-card class="mx-auto p-3 m-5" max-width="300">
+          <v-card
+            class="mx-auto p-3 m-5"
+            max-width="300"
+            v-transition="{ name: 'v-fade-transition' }"
+          >
             <div class="grid-container">
               <div class="grid-item">
                 <div class="poster-container">
@@ -122,7 +126,7 @@
               }}</v-chip> -->
       </template>
     </v-data-table>
-    <v-card>
+    <v-card v-transition="{ name: 'v-fade-transition' }">
       <v-row class="text-center px-4 align-center" wrap>
         <v-col class="text-truncate" cols="12" md="2">
           Total {{ totalRecords }} records
@@ -355,5 +359,9 @@ tbody {
 }
 .v-data-table-footer {
   display: none;
+}
+.v-enter-active {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 }
 </style>
