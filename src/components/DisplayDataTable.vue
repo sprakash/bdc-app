@@ -25,7 +25,7 @@
         hide-details
       ></v-text-field>
     </v-card-title>
-    <v-card v-transition="{ name: 'v-fade-transition' }">
+    <v-card v-transition="{ name: 'v-fade-transition' }" flat>
       <v-row class="text-center px-4 align-center" wrap>
         <v-col class="text-truncate" cols="12" md="2">
           Total {{ totalRecords }} records
@@ -37,7 +37,9 @@
     </v-card>
     <v-data-table
       :headers="headers"
+      :search="search"
       :items="currentPageRecords"
+      itemKey="fields.Name"
       hide-default-footer
       class="d-flex"
     >
@@ -157,9 +159,9 @@ export default {
     },
   },
   setup(props) {
-    const search = "";
+    const search = ref("");
     const headers = [
-      { text: "Name", value: "fields.Name" },
+      { text: "Name", value: "fields.Name", filterable: false },
       { text: "Website", value: "Website" },
       { text: "Bio", value: "fields.Bio" },
       { text: "Headshot", value: "Headshot" },
@@ -198,6 +200,17 @@ export default {
         .replace(/[^a-z0-9-]+/g, "-"); // Replace other characters with hyphens
     };
 
+    //search
+    const filterBySearch = (record) => {
+      // Implement your specific search logic here
+      const searchText = search.value.toLowerCase();
+      return (
+        record.fields.Name.toLowerCase().includes(searchText) ||
+        record.fields.Bio.toLowerCase().includes(searchText)
+        // ... other fields to search in
+      );
+    };
+
     //pagination
     const page = ref(1); // Initialize page number
     const itemsPerPage = 10;
@@ -206,16 +219,26 @@ export default {
       Math.ceil(totalRecords.value / itemsPerPage)
     );
     const totalPages = Math.ceil(totalRecords.value / itemsPerPage);
+    // Filtered records (including search)
+    const filteredRecords = computed(() =>
+      props.records.filter(filterBySearch)
+    );
 
     watch(page, async (newPage, oldPage) => {
       if (newPage !== oldPage) {
         // Calculate data slice for the new page
         const start = (newPage - 1) * itemsPerPage;
         const end = start + itemsPerPage;
-        const currentRecords = props.records.slice(start, end);
+        const currentPageRecords = props.records.slice(start, end);
         // Assign sliced data to a separate property
         // (e.g., currentPageRecords) for v-data-table
       }
+    });
+
+    const currentPageRecords = computed(() => {
+      const start = (page.value - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      return filteredRecords.value.slice(start, end);
     });
 
     return {
@@ -227,12 +250,7 @@ export default {
       pageCount,
       totalPages,
       totalRecords,
-      currentPageRecords: computed(() => {
-        // Return sliced data based on page and itemsPerPage
-        const start = (page.value - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        return props.records.slice(start, end);
-      }),
+      currentPageRecords,
       navigateToFilmDetail,
       navigateToFilmmakerDetail,
     };
