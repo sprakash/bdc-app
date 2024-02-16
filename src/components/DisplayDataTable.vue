@@ -230,7 +230,7 @@ export default {
   width: 100%;
   height: 0;
   transition: 0.5s ease;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 .poster-container:hover .overlay {
   height: 75%;
@@ -241,7 +241,7 @@ export default {
   text-align: left;
 }
 .card-sub {
-  background-color: #d2c3e1;
+  background-color: #fff;
 }
 
 table {
@@ -280,6 +280,7 @@ tbody {
 #films img.v-img__img.v-img__img--cover {
   object-fit: contain;
   border-bottom: 2px solid white;
+  top: 15px;
 }
 
 #filmmakers .v-card {
@@ -305,6 +306,7 @@ tbody {
 }
 
 #films .v-card .v-card-title {
-  color: yellow;
+  color: #f8f9e2;
+  text-shadow: 3px 2px #3d0939;
 }
 </style>
