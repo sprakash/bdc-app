@@ -220,6 +220,9 @@ export default {
 .poster-container {
   position: relative;
 }
+#films .poster-container {
+  top: 20px;
+}
 .overlay {
   position: absolute;
   bottom: 0;
@@ -233,8 +236,13 @@ export default {
   opacity: 0.95;
 }
 .poster-container:hover .overlay {
-  height: 75%;
+  height: 100%;
 }
+
+#films .poster-container:hover .overlay {
+  height: 108%;
+}
+
 .text {
   color: white;
   font-size: 15px;
@@ -262,10 +270,11 @@ tbody {
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 100px;
+  height: 180px;
   display: flex;
   flex-wrap: wrap;
   white-space: pre-wrap;
+  margin-top: 2em;
 }
 
 .card-size {
@@ -274,6 +283,10 @@ tbody {
 
 #films {
   margin: 0 0.15em;
+}
+
+#filmmakers {
+  width: 20%;
 }
 
 #filmmakers img.v-img__img.v-img__img--cover,
@@ -291,6 +304,7 @@ tbody {
   border: 1px solid whitesmoke;
 }
 
+#films .v-card .v-card-title,
 #filmmakers .v-card-title {
   background: whitesmoke;
   color: #8044a7;
@@ -303,10 +317,5 @@ tbody {
   border-radius: 35px;
   padding: 0;
   border: 8px solid white;
-}
-
-#films .v-card .v-card-title {
-  color: #f8f9e2;
-  text-shadow: 3px 2px #3d0939;
 }
 </style>
