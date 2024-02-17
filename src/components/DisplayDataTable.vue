@@ -60,7 +60,7 @@
                 <div class="grid-item">
                   <div class="poster-container">
                     <v-img
-                      :src="item.fields.Poster[0].thumbnails.large.url"
+                      :src="item.fields?.Poster[0]?.thumbnails.large.url"
                       class="poster align-center"
                       cover
                     />
