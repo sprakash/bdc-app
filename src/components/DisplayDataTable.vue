@@ -50,7 +50,13 @@
         class="d-flex"
       >
         <template #item="{ item }">
-          <div v-if="dataType === 'film'" id="films">
+          <div
+            v-if="dataType === 'film'"
+            id="films"
+            class="flex justify-center flex-col items-center"
+          >
+            <p class="text-center">{{ item.fields.Name }}</p>
+
             <v-card
               class="mx-auto p-3 m-5"
               max-width="300"
@@ -60,6 +66,7 @@
                 <div class="grid-item">
                   <div class="poster-container">
                     <v-img
+                      v-if="item.fields?.Poster?.length > 0"
                       :src="item.fields?.Poster[0]?.thumbnails.large.url"
                       class="poster align-center"
                       cover
@@ -367,6 +374,12 @@ export default {
 }
 #bySelect {
   margin-top: 5em;
+}
+#films p {
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 65%;
 }
 #films .poster-container {
   top: 20px;
