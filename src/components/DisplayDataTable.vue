@@ -12,7 +12,12 @@
           :items="uniqueTags"
         >
         </v-select>
-        <v-select v-model="selectedYear" label="By Year" :items="uniqueYears">
+        <v-select
+          v-model="selectedYear"
+          label="By Year"
+          :items="uniqueYears"
+          v-if="dataType === 'film'"
+        >
         </v-select>
       </v-card>
     </div>
@@ -166,6 +171,7 @@ export default {
     //refs
     const search = ref("");
     const selectedSubject = ref("ALL"); // Initialize selectedSubject
+    const selectedYear = ref("SELECT");
     const page = ref(1); // Initialize page number
 
     const headers = [
@@ -255,12 +261,12 @@ export default {
       }
     });
 
-    watch(selectedSubject, (newSubject, oldSubject) => {
+    watch(selectedSubject, async (newSubject, oldSubject) => {
       // Update filteredRecords when selectedSubject changes
       if (props.dataType === "film") {
         if (selectedSubject.value === "ALL") {
           console.log(" WE ARE AT ALL", props.records);
-          return props.records;
+          filteredRecords.value = props.records;
         }
         filteredRecords.value = props.records.filter((record) => {
           console.log(
@@ -278,6 +284,22 @@ export default {
       }
     });
 
+    watch(selectedYear, async (newYear, oldYear) => {
+      if (props.dataType === "film") {
+        if (selectedYear.value === "SELECT") {
+          console.log("WE ARE AT YEAR SELECT", props.records);
+          filteredRecords.value = props.records;
+        }
+        filteredRecords.value = props.records.filter((record) => {
+          return record.fields["Name (from Year)"]?.includes(
+            newYear.toString()
+          );
+        });
+
+        console.log(" FOUND BASED ON YEAR ", filteredRecords.value);
+      }
+    });
+
     const currentPageRecords = computed(() => {
       const start = (page.value - 1) * itemsPerPage;
       const end = start + itemsPerPage;
@@ -291,12 +313,23 @@ export default {
           tagsSet.add(tag.toUpperCase());
         });
       });
-
-      const sortedFilters = Array.from(tagsSet).sort((a, b) =>
+      const tagFiltered = Array.from(tagsSet).sort((a, b) =>
         a.localeCompare(b)
       );
-      sortedFilters.unshift("ALL");
-      return sortedFilters;
+      tagFiltered.unshift("ALL");
+      return tagFiltered;
+    });
+
+    const uniqueYears = computed(() => {
+      const yearsSet = new Set();
+      props.records.forEach((record) => {
+        record.fields["Name (from Year)"]?.forEach((year) => {
+          yearsSet.add(year);
+        });
+      });
+      const yearsFiltered = Array.from(yearsSet).sort((a, b) => b - a);
+      yearsFiltered.unshift("SELECT");
+      return yearsFiltered;
     });
 
     return {
@@ -304,7 +337,9 @@ export default {
       search,
       headers,
       selectedSubject,
+      selectedYear,
       uniqueTags,
+      uniqueYears,
       page,
       pageCount,
       totalPages,
