@@ -109,11 +109,6 @@ export default {
 };
 </script>
 <style>
-#bdc-logo {
-  top: 0;
-  position: fixed;
-  z-index: 9;
-}
 #topNav .v-btn {
   font-size: 1.25em;
   border-radius: 0;

@@ -12,6 +12,8 @@
           :items="uniqueTags"
         >
         </v-select>
+        <v-select v-model="selectedYear" label="By Year" :items="uniqueYears">
+        </v-select>
       </v-card>
     </div>
 
