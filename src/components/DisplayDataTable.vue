@@ -1,143 +1,145 @@
 <template>
-  <div>
-    <v-row>
-      <v-spacer />
-    </v-row>
-
-    <p>Data Type: {{ props?.dataType }}</p>
-    <div>
-      <div v-if="dataType === 'film'">
-        <div class="p-3">
-          <select v-model="selectedSubject" @change="handleChange">
-            <option value="">All Subject</option>
-            <option v-for="subject in subjects" :key="subject" :value="subject">
-              {{ subject }}
-            </option>
-          </select>
-        </div>
-      </div>
+  <div :class="{ 'flex justify-between w-full': useFlex }">
+    <div class="w-1/5" v-if="dataType === 'film'">
+      <v-card
+        v-if="dataType === 'film' && currentPageRecords.length > 0"
+        class="p-3"
+        id="bySelect"
+      >
+        <v-select
+          v-model="selectedSubject"
+          label="By Subject"
+          :items="uniqueTags"
+        >
+        </v-select>
+      </v-card>
     </div>
-    <v-card-title>
-      <v-text-field
-        v-model="search"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
-    </v-card-title>
-    <v-card v-transition="{ name: 'v-fade-transition' }" flat>
-      <v-row class="text-center px-4 align-center" wrap>
-        <v-col class="text-truncate" cols="12" md="2">
-          Total {{ totalRecords }} records
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-pagination v-model="page" :length="pageCount"> </v-pagination>
-        </v-col>
-      </v-row>
-    </v-card>
-    <v-data-table
-      :headers="headers"
-      :search="search"
-      :items="currentPageRecords"
-      itemKey="fields.Name"
-      hide-default-footer
-      class="d-flex"
-    >
-      <template #item="{ item }">
-        <div v-if="dataType === 'film'" id="films">
-          <v-card
-            class="mx-auto p-3 m-5"
-            max-width="300"
-            v-transition="{ name: 'v-fade-transition' }"
-          >
-            <div class="grid-container">
-              <div class="grid-item">
-                <div class="poster-container">
-                  <v-img
-                    :src="item.fields.Poster[0].thumbnails.large.url"
-                    class="poster align-center"
-                    cover
-                  />
-                  <div class="overlay">
-                    <div class="text">
-                      <v-card-title>{{ item.fields.Name }}</v-card-title>
-                      <v-card-text class="text-justify truncate">{{
-                        item.fields.Summary
-                      }}</v-card-text>
-                      <v-card-subtitle
-                        @click="item ? navigateToFilmDetail(item) : false"
-                        class="px-3 py-5"
-                        ><span
-                          class="card-sub rounded-md text-black font-semibold px-5 py-2"
-                          >LEARN MORE >></span
-                        ></v-card-subtitle
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            //stop grid-container films
-          </v-card>
-        </div>
-        <div v-if="dataType === 'filmmaker'" id="filmmakers">
-          <v-card
-            class="card-size"
-            max-width="400"
-            @click="item ? navigateToFilmmakerDetail(item) : false"
-          >
-            <div class="grid-container">
-              <div class="grid-item">
-                <div class="poster-container">
-                  <div class="" v-if="item.fields?.Headshot?.length > 0">
+
+    <div class="w-full">
+      <v-card-title>
+        <v-text-field
+          v-model="search"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      <v-card v-transition="{ name: 'v-fade-transition' }" flat>
+        <v-row class="text-center px-4 align-center" wrap>
+          <v-col class="text-truncate" cols="12" md="2">
+            Total {{ totalRecords }} records
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-pagination v-model="page" :length="pageCount"> </v-pagination>
+          </v-col>
+        </v-row>
+      </v-card>
+      <v-data-table
+        :headers="headers"
+        :search="search"
+        :items="currentPageRecords"
+        itemKey="fields.Name"
+        hide-default-footer
+        class="d-flex"
+      >
+        <template #item="{ item }">
+          <div v-if="dataType === 'film'" id="films">
+            <v-card
+              class="mx-auto p-3 m-5"
+              max-width="300"
+              v-transition="{ name: 'v-fade-transition' }"
+            >
+              <div class="grid-container">
+                <div class="grid-item">
+                  <div class="poster-container">
                     <v-img
-                      :src="item.fields?.Headshot[0].url"
-                      class="headshot"
+                      :src="item.fields.Poster[0].thumbnails.large.url"
+                      class="poster align-center"
                       cover
                     />
-                  </div>
-
-                  <v-card-title> {{ item.fields.Name }}</v-card-title>
-
-                  <div class="overlay">
-                    <div class="text">
-                      <v-card-title>{{ item.fields.Name }}</v-card-title>
-                      <v-card-text class="text-justify truncate">{{
-                        item.fields.Bio
-                      }}</v-card-text>
-                      <v-card-subtitle
-                        @click="item ? navigateToFilmmakerDetail(item) : false"
-                        class="px-3 py-5"
-                        ><span
-                          class="card-sub rounded-md text-black font-semibold px-5 py-2"
-                          >LEARN MORE >></span
-                        ></v-card-subtitle
-                      >
+                    <div class="overlay">
+                      <div class="text">
+                        <v-card-title>{{ item.fields.Name }}</v-card-title>
+                        <v-card-text class="text-justify truncate">{{
+                          item.fields.Summary
+                        }}</v-card-text>
+                        <v-card-subtitle
+                          @click="item ? navigateToFilmDetail(item) : false"
+                          class="px-3 py-5"
+                          ><span
+                            class="card-sub rounded-md text-black font-semibold px-5 py-2"
+                            >LEARN MORE >></span
+                          ></v-card-subtitle
+                        >
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </v-card>
-        </div>
-        <!-- <v-card-text class="text-justify">{{
+              //stop grid-container films
+            </v-card>
+          </div>
+          <div v-if="dataType === 'filmmaker'" id="filmmakers">
+            <v-card
+              class="card-size"
+              max-width="400"
+              @click="item ? navigateToFilmmakerDetail(item) : false"
+            >
+              <div class="grid-container">
+                <div class="grid-item">
+                  <div class="poster-container">
+                    <div class="" v-if="item.fields?.Headshot?.length > 0">
+                      <v-img
+                        :src="item.fields?.Headshot[0].url"
+                        class="headshot"
+                        cover
+                      />
+                    </div>
+
+                    <v-card-title> {{ item.fields.Name }}</v-card-title>
+
+                    <div class="overlay">
+                      <div class="text">
+                        <v-card-title>{{ item.fields.Name }}</v-card-title>
+                        <v-card-text class="text-justify truncate">{{
+                          item.fields.Bio
+                        }}</v-card-text>
+                        <v-card-subtitle
+                          @click="
+                            item ? navigateToFilmmakerDetail(item) : false
+                          "
+                          class="px-3 py-5"
+                          ><span
+                            class="card-sub rounded-md text-black font-semibold px-5 py-2"
+                            >LEARN MORE >></span
+                          ></v-card-subtitle
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </v-card>
+          </div>
+          <!-- <v-card-text class="text-justify">{{
                 item.fields.Bio
               }}</v-card-text>
               <v-chip class="ma-3" color="pink" label>{{
                 items?.fields["Subject of Films"]
               }}</v-chip> -->
-      </template>
-    </v-data-table>
-    <v-card v-transition="{ name: 'v-fade-transition' }">
-      <v-row class="text-center px-4 align-center" wrap>
-        <v-col class="text-truncate" cols="12" md="2">
-          Total {{ totalRecords }} records
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-pagination v-model="page" :length="pageCount"> </v-pagination>
-        </v-col>
-      </v-row>
-    </v-card>
+        </template>
+      </v-data-table>
+      <v-card v-transition="{ name: 'v-fade-transition' }">
+        <v-row class="text-center px-4 align-center" wrap>
+          <v-col class="text-truncate" cols="12" md="2">
+            Total {{ totalRecords }} records
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-pagination v-model="page" :length="pageCount"> </v-pagination>
+          </v-col>
+        </v-row>
+      </v-card>
+    </div>
   </div>
 </template>
 <script>
@@ -159,7 +161,11 @@ export default {
     },
   },
   setup(props) {
+    //refs
     const search = ref("");
+    const selectedSubject = ref("ALL"); // Initialize selectedSubject
+    const page = ref(1); // Initialize page number
+
     const headers = [
       { text: "Name", value: "fields.Name", filterable: false },
       { text: "Website", value: "Website" },
@@ -167,13 +173,13 @@ export default {
       { text: "Headshot", value: "Headshot" },
     ];
 
+    const useFlex = props.dataType === "film" ? true : false;
+
     // Data source consistency check (optional)
     if (!props.records || !props.records.length) {
       // Handle empty data case
       return;
     }
-    const selectedSubject = "";
-    const subjects = ["African American", "Politics", "Biography"]; // sample genres
 
     /* eslint-disable no-unused-vars */
     const router = useRouter();
@@ -208,16 +214,25 @@ export default {
     //search
     const filterBySearch = (record) => {
       // Implement your specific search logic here
-      const searchText = search.value.toLowerCase();
-      return (
-        record.fields.Name.toLowerCase().includes(searchText) ||
-        record.fields.Bio.toLowerCase().includes(searchText)
-        // ... other fields to search in
-      );
+      const searchText = search?.value.toLowerCase();
+
+      if (props.dataType === "filmmaker") {
+        return (
+          record.fields.Name.toLowerCase().includes(searchText) ||
+          record.fields.Bio.toLowerCase().includes(searchText) ||
+          record.fields.Summary.toLowerCase()
+          // ... other fields to search in
+        );
+      } else {
+        return (
+          record.fields.Name.toLowerCase().includes(searchText) ||
+          record.fields.Summary.toLowerCase().includes(searchText)
+          // ... other fields to search in
+        );
+      }
     };
 
     //pagination
-    const page = ref(1); // Initialize page number
     const itemsPerPage = 10;
     const totalRecords = computed(() => props.records?.length);
     const pageCount = computed(() =>
@@ -225,9 +240,7 @@ export default {
     );
     const totalPages = Math.ceil(totalRecords.value / itemsPerPage);
     // Filtered records (including search)
-    const filteredRecords = computed(() =>
-      props.records.filter(filterBySearch)
-    );
+    const filteredRecords = ref([...props.records.filter(filterBySearch)]);
 
     watch(page, async (newPage, oldPage) => {
       if (newPage !== oldPage) {
@@ -240,17 +253,56 @@ export default {
       }
     });
 
+    watch(selectedSubject, (newSubject, oldSubject) => {
+      // Update filteredRecords when selectedSubject changes
+      if (props.dataType === "film") {
+        if (selectedSubject.value === "ALL") {
+          console.log(" WE ARE AT ALL", props.records);
+          return props.records;
+        }
+        filteredRecords.value = props.records.filter((record) => {
+          console.log(
+            "oldSubject",
+            oldSubject.toLowerCase(),
+            "   newSubject",
+            newSubject.toLowerCase(),
+            record.fields.Tags?.includes(newSubject.toLowerCase())
+              ? "true"
+              : "false",
+            record.fields.Tags
+          );
+          return record.fields.Tags?.includes(newSubject.toLowerCase());
+        });
+      }
+    });
+
     const currentPageRecords = computed(() => {
       const start = (page.value - 1) * itemsPerPage;
       const end = start + itemsPerPage;
       return filteredRecords.value.slice(start, end);
     });
 
+    const uniqueTags = computed(() => {
+      const tagsSet = new Set();
+      props.records.forEach((record) => {
+        record.fields?.Tags?.forEach((tag) => {
+          tagsSet.add(tag.toUpperCase());
+        });
+      });
+
+      const sortedFilters = Array.from(tagsSet).sort((a, b) =>
+        a.localeCompare(b)
+      );
+      sortedFilters.unshift("ALL");
+      return sortedFilters;
+    });
+
     return {
+      useFlex,
       search,
       headers,
       selectedSubject,
-      subjects,
+      uniqueTags,
       page,
       pageCount,
       totalPages,
@@ -275,6 +327,9 @@ export default {
 }
 .poster-container {
   position: relative;
+}
+#bySelect {
+  margin-top: 5em;
 }
 #films .poster-container {
   top: 20px;

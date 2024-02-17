@@ -14,7 +14,6 @@ import { ref } from "vue";
 export default {
   setup() {
     const filmRecords = ref(null);
-    const awsFilmRecords = ref(null);
     const error = ref(null);
     const getFilms = async () => {
       try {
@@ -30,7 +29,7 @@ export default {
     };
 
     getFilms();
-    return { awsFilmRecords, filmRecords, error };
+    return { filmRecords, error };
   },
 
   components: { DisplayDataTable },
