@@ -1,7 +1,12 @@
 <template>
   <div id="topNav">
     <v-toolbar>
-      <v-img src="@/assets/hires-logo-bdc.png" alt="My Logo" width="150" />
+      <v-img
+        src="@/assets/hires-logo-bdc.png"
+        alt="BDC Logo"
+        width="150"
+        id="bdc-logo"
+      />
       <v-spacer />
       <v-btn text to="/">Home</v-btn>
       <v-btn text to="/filmmakers">Filmmakers</v-btn>
@@ -104,6 +109,11 @@ export default {
 };
 </script>
 <style>
+#bdc-logo {
+  top: 0;
+  position: fixed;
+  z-index: 9;
+}
 #topNav .v-btn {
   font-size: 1.25em;
   border-radius: 0;
