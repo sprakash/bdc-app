@@ -10,6 +10,8 @@
           v-model="selectedSubject"
           label="By Subject"
           :items="uniqueTags"
+          @change="clearOthers('selectedSubject')"
+          id="selectedSubject"
         >
         </v-select>
         <v-select
@@ -17,6 +19,8 @@
           label="By Year"
           :items="uniqueYears"
           v-if="dataType === 'film'"
+          @change="clearOthers('selectedYear')"
+          id="selectedYear"
         >
         </v-select>
       </v-card>
@@ -268,7 +272,7 @@ export default {
         // Calculate data slice for the new page
         const start = (newPage - 1) * itemsPerPage;
         const end = start + itemsPerPage;
-        const currentPageRecords = props.records.slice(start, end);
+        currentPageRecords.value = props.records.slice(start, end);
         // Assign sliced data to a separate property
         // (e.g., currentPageRecords) for v-data-table
       }
@@ -277,39 +281,40 @@ export default {
     watch(selectedSubject, async (newSubject, oldSubject) => {
       // Update filteredRecords when selectedSubject changes
       if (props.dataType === "film") {
-        if (selectedSubject.value === "ALL") {
+        if (selectedSubject.value !== "ALL") {
+          filteredRecords.value = props.records.filter((record) => {
+            console.log(
+              "oldSubject",
+              oldSubject.toLowerCase(),
+              "   newSubject",
+              newSubject.toLowerCase(),
+              record.fields.Tags?.includes(newSubject.toLowerCase())
+                ? "true"
+                : "false",
+              record.fields.Tags
+            );
+            return record.fields.Tags?.includes(newSubject.toLowerCase());
+          });
+        } else {
           console.log(" WE ARE AT ALL", props.records);
           filteredRecords.value = props.records;
         }
-        filteredRecords.value = props.records.filter((record) => {
-          console.log(
-            "oldSubject",
-            oldSubject.toLowerCase(),
-            "   newSubject",
-            newSubject.toLowerCase(),
-            record.fields.Tags?.includes(newSubject.toLowerCase())
-              ? "true"
-              : "false",
-            record.fields.Tags
-          );
-          return record.fields.Tags?.includes(newSubject.toLowerCase());
-        });
       }
     });
 
     watch(selectedYear, async (newYear, oldYear) => {
       if (props.dataType === "film") {
-        if (selectedYear.value === "SELECT") {
+        if (selectedYear.value !== "SELECT") {
+          filteredRecords.value = props.records.filter((record) => {
+            return record.fields["Name (from Year)"]?.includes(
+              newYear.toString()
+            );
+          });
+          console.log(" FOUND BASED ON YEAR ", filteredRecords.value);
+        } else {
           console.log("WE ARE AT YEAR SELECT", props.records);
           filteredRecords.value = props.records;
         }
-        filteredRecords.value = props.records.filter((record) => {
-          return record.fields["Name (from Year)"]?.includes(
-            newYear.toString()
-          );
-        });
-
-        console.log(" FOUND BASED ON YEAR ", filteredRecords.value);
       }
     });
 
