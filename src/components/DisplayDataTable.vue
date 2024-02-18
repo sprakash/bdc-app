@@ -249,13 +249,19 @@ export default {
 
     //pagination
     const itemsPerPage = 10;
-    const totalRecords = computed(() => props.records?.length);
+    const filteredRecords = ref([...props.records.filter(filterBySearch)]);
+
+    const currentPageRecords = computed(() => {
+      const start = (page.value - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      return filteredRecords.value.slice(start, end);
+    });
+    const totalRecords = computed(() => filteredRecords.value?.length);
     const pageCount = computed(() =>
       Math.ceil(totalRecords.value / itemsPerPage)
     );
     const totalPages = Math.ceil(totalRecords.value / itemsPerPage);
     // Filtered records (including search)
-    const filteredRecords = ref([...props.records.filter(filterBySearch)]);
 
     watch(page, async (newPage, oldPage) => {
       if (newPage !== oldPage) {
@@ -305,12 +311,6 @@ export default {
 
         console.log(" FOUND BASED ON YEAR ", filteredRecords.value);
       }
-    });
-
-    const currentPageRecords = computed(() => {
-      const start = (page.value - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      return filteredRecords.value.slice(start, end);
     });
 
     const uniqueTags = computed(() => {
