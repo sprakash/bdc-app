@@ -5,7 +5,10 @@
       <DisplayDataTable :records="filmRecords" dataType="film" />
     </div>
     <div v-else-if="error">Error fetching records: {{ error }}</div>
-    <div v-else class="text-center items-center justify-center flex h-auto">
+    <div
+      v-else
+      class="text-center items-center justify-center p-20 flex-col h-80"
+    >
       <div>
         <v-progress-circular indeterminate size="64"></v-progress-circular>
       </div>
