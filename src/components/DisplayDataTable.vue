@@ -10,7 +10,6 @@
           v-model="selectedSubject"
           label="By Subject"
           :items="uniqueTags"
-          @change="clearOthers('selectedSubject')"
           id="selectedSubject"
         >
         </v-select>
@@ -19,7 +18,6 @@
           label="By Year"
           :items="uniqueYears"
           v-if="dataType === 'film'"
-          @change="clearOthers('selectedYear')"
           id="selectedYear"
         >
         </v-select>
@@ -33,6 +31,8 @@
           label="Search"
           single-line
           hide-details
+          prepend-inner-icon="mdi-magnify"
+          variant="outlined"
         ></v-text-field>
       </v-card-title>
       <v-card v-transition="{ name: 'v-fade-transition' }" flat>
@@ -184,6 +184,7 @@ export default {
     const selectedSubject = ref("ALL"); // Initialize selectedSubject
     const selectedYear = ref("SELECT");
     const page = ref(1); // Initialize page number
+    const filteredRecords = ref([...props.records]);
 
     const headers = [
       { text: "Name", value: "fields.Name", filterable: false },
@@ -253,7 +254,6 @@ export default {
 
     //pagination
     const itemsPerPage = 10;
-    const filteredRecords = ref([...props.records.filter(filterBySearch)]);
 
     const currentPageRecords = computed(() => {
       const start = (page.value - 1) * itemsPerPage;
@@ -268,6 +268,7 @@ export default {
     // Filtered records (including search)
 
     watch(page, async (newPage, oldPage) => {
+      console.log(" PAGES CHANGE");
       if (newPage !== oldPage) {
         // Calculate data slice for the new page
         const start = (newPage - 1) * itemsPerPage;
