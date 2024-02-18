@@ -52,6 +52,7 @@
         itemKey="fields.Name"
         hide-default-footer
         class="d-flex"
+        loading-text="Loading... Please wait"
       >
         <template #item="{ item }">
           <div
@@ -231,6 +232,10 @@ export default {
         .replace(/[^a-z0-9-]+/g, "-"); // Replace other characters with hyphens
     };
 
+    const testingTable = () => {
+      console.log(" testing this table");
+      return "testing";
+    };
     //search
     const filterBySearch = (record) => {
       // Implement your specific search logic here

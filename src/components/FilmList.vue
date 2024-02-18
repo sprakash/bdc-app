@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-if="filmRecords">
+    <div v-if="filmRecords" id="filmRecords">
+      <h1>Film Catalog</h1>
       <DisplayDataTable :records="filmRecords" dataType="film" />
     </div>
     <div v-else-if="error">Error fetching records: {{ error }}</div>
@@ -35,4 +36,13 @@ export default {
   components: { DisplayDataTable },
 };
 </script>
-<style></style>
+<style>
+#filmRecords h1 {
+  font-size: 2em;
+  margin-top: 0.5em;
+  margin-left: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid gray;
+}
+</style>
