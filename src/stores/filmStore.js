@@ -4,6 +4,11 @@ export const useFilmStore = defineStore("film", {
   state: () => ({
     selectedFilm: null,
     subjects: [],
+    producer: [],
+    director: [],
+    camera: [],
+    editor: [],
+    sound: [],
   }),
   getters: {
     findFilmByName(filmName) {

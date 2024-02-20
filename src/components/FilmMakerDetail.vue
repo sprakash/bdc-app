@@ -4,7 +4,7 @@
     id="filmmakerDetail"
     class="my-10 mx-20 flex justify-between"
   >
-    <v-card class="w-1/2 align-middle">
+    <v-card class="w-1/2 flex items-center">
       <v-img
         :src="
           filmmakerStore.selectedFilmmaker.fields.Headshot[0]?.thumbnails.large
@@ -28,13 +28,19 @@
             class="text-justify leading-8"
           >
             {{ filmmakerStore.selectedFilmmaker.fields.Bio }}
+            <hr class="py-1" />
+            <span class="mr-5"><strong>ROLES</strong></span>
+            <span
+              class="bg-violet-100 px-5 py-1 inline-block rounded-full font-thin tracking-widest text-sm cursor-pointer hover:bg-orange-100"
+              >{{
+                filmmakerStore.selectedFilmmaker.fields[
+                  "Name (from Roles)"
+                ][0].toUpperCase()
+              }}</span
+            >
           </v-window-item>
 
-          <v-window-item value="roles" :transition="false">
-            {{
-              filmmakerStore.selectedFilmmaker.fields["Name (from Roles)"][0]
-            }}
-          </v-window-item>
+          <v-window-item value="roles" :transition="false"> </v-window-item>
 
           <v-window-item value="tags" :transition="false">
             {{
