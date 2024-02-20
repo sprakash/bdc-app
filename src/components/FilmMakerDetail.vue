@@ -1,19 +1,19 @@
 <template>
-  <v-card
-    v-transition="{ name: 'v-fade-transition' }"
-    id="filmmakerDetail"
-    class="my-10 mx-20 flex justify-between"
-  >
+  <v-card id="filmmakerDetail" class="my-10 mx-20 flex justify-between">
     <v-card class="w-1/2 flex items-center">
       <v-img
-        :src="
-          filmmakerStore.selectedFilmmaker.fields.Headshot[0]?.thumbnails.large
-            .url
-        "
+        :src="filmmaker.fields.Headshot[0]?.thumbnails?.large.url"
+        v-if="filmmaker && filmmaker.fields.Headshot[0]?.thumbnails.large.url"
       />
+      <v-progress-circular
+        indeterminate
+        size="64"
+        class="w-100"
+        v-else
+      ></v-progress-circular>
     </v-card>
     <v-card class="w-full">
-      <h1>{{ filmmakerStore.selectedFilmmaker.fields.Name }}</h1>
+      <h1>{{ filmmaker?.fields.Name }}</h1>
       <v-tabs v-model="tab" bg-color="primary">
         <v-tab value="about">Bio</v-tab>
         <v-tab value="films">Films</v-tab>
@@ -27,15 +27,14 @@
             :transition="false"
             class="text-justify leading-8"
           >
-            {{ filmmakerStore.selectedFilmmaker.fields.Bio }}
+            {{ filmmaker?.fields.Bio }}
             <hr class="py-1" />
             <span class="mr-5"><strong>ROLES</strong></span>
             <span
               class="bg-violet-100 px-5 py-1 inline-block rounded-full font-thin tracking-widest text-sm cursor-pointer hover:bg-orange-100"
               >{{
-                filmmakerStore.selectedFilmmaker.fields[
-                  "Name (from Roles)"
-                ][0].toUpperCase()
+                filmmaker &&
+                filmmaker?.fields["Name (from Roles)"][0].toUpperCase()
               }}</span
             >
           </v-window-item>
@@ -43,11 +42,7 @@
           <v-window-item value="roles" :transition="false"> </v-window-item>
 
           <v-window-item value="tags" :transition="false">
-            {{
-              filmmakerStore.selectedFilmmaker.fields[
-                "Other Languages/Skills"
-              ][0]
-            }}
+            {{ filmmaker?.fields["Other Languages/Skills"][0] }}
           </v-window-item>
         </v-window>
       </v-card-text>
@@ -56,13 +51,48 @@
 </template>
 <script>
 import { useFilmmakerStore } from "@/stores/filmmakerStore";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
+import { useRoute } from "vue-router";
+
 export default {
   setup() {
     const filmmakerStore = useFilmmakerStore();
     const tab = ref("about");
+
+    const route = useRoute();
+    const filmmakerName = route.params.name; // Extract ID from URL
+
+    // State to handle data fetching status and potential errors
+    const filmmaker = ref(null);
+    const isFetching = ref(false); // Boolean flag for loading state
+    const fetchError = ref(null); // String to hold error message
+
+    // Fetch and handle data with watchEffect for reactivity
+    watchEffect(() => {
+      if (filmmakerName && !filmmaker.value) {
+        isFetching.value = true; // Set loading state
+        filmmakerStore
+          .fetchFilmmaker(filmmakerName)
+          .then((data) => {
+            if (data && data.length > 0) {
+              filmmaker.value = data[0]; // Assuming the first match is correct
+            } else {
+              fetchError.value = `Filmmaker not found: ${filmmakerName}`;
+            }
+          })
+          .catch((error) => {
+            fetchError.value = `Error fetching filmmaker: ${error}`;
+          })
+          .finally(() => {
+            isFetching.value = false; // Clear loading state
+          });
+      }
+    }, [filmmakerName]);
+
     return {
-      filmmakerStore,
+      filmmaker,
+      isFetching,
+      fetchError,
       tab,
     };
   },
