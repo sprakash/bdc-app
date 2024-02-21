@@ -34,7 +34,9 @@
               class="bg-violet-100 px-5 py-1 inline-block rounded-full font-thin tracking-widest text-sm cursor-pointer hover:bg-orange-100"
               >{{
                 filmmaker &&
-                filmmaker?.fields["Name (from Roles)"][0].toUpperCase()
+                filmmaker?.fields["Name (from Roles)"].map((role) =>
+                  role.toUpperCase()
+                )
               }}</span
             >
           </v-window-item>

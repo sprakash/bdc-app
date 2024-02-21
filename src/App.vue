@@ -100,6 +100,34 @@
       </section>
 
       <hr />
+      <section class="mb-12 mt-12" id="resources">
+        <h1 class="centered-content header text-black font-bold mb-5">
+          RESOURCES
+        </h1>
+        <div class="content-text-2 text-center px-5 mb-5 flex">
+          <div>
+            <iframe
+              title="vimeo-player"
+              src="https://player.vimeo.com/video/898986294?h=822768aeca"
+              width="800"
+              height="600"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="text-left relative w-1/4" style="left: -10%">
+            Visit the
+            <a
+              href="https://linktr.ee/bdcnewyork"
+              target="_blank"
+              class="underline text-blue-600 mr-2"
+              >BDC Linktree</a
+            >for daily updates and information about grants, fellowships,
+            workshops, festivals, industry news and more!
+          </div>
+        </div>
+      </section>
+      <hr />
 
       <section class="mb-12 mt-12">
         <h1 class="centered-content header text-black font-bold mb-5">
@@ -121,9 +149,24 @@
       </section>
 
       <hr />
+      <section class="centered-content mt-12 mb-5" id="donate">
+        <h1 class="header text-black font-bold mb-5">DONATE</h1>
+        <div class="content-text-2 text-center px-5 mb-5">
+          <a
+            href="https://www.paypal.com/donate?token=XLu6eUQWL61AAxHwTOP1KKA3OVelGNhJMC9bl-AFk-1aeqOSPs80jUI24bABc6xVVqmC6u6wpp0_F9Zz"
+            target="_blank"
+            class="flex justify-center"
+          >
+            <v-img src="@/assets/gimmefive.png" max-width="200" />
 
-      <section>
-        <!-- donate -->
+            <v-img src="@/assets/paypal.png" max-width="300" max-height="171"
+          /></a>
+          <p class="text-center inline-block pt-10 w-50">
+            Show your support for our all-volunteer organization by making a
+            tax-deductible donation! Whether you give $5 or $500, your donation
+            is the fuel that keeps us going!
+          </p>
+        </div>
       </section>
 
       <hr />
