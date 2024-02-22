@@ -1,5 +1,5 @@
 <template>
-  <v-card id="filmmakerDetail" class="my-10 mx-20 flex justify-between">
+  <v-card id="filmmakerDetail" class="my-10 mx-20 flex justify-between py-20">
     <v-card class="w-1/2 flex items-center">
       <v-img
         :src="filmmaker.fields.Headshot[0]?.thumbnails?.large.url"

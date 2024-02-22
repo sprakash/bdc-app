@@ -1,30 +1,37 @@
 <template>
-  <v-container class="grey lighten-5">
-    <v-row>
-      <v-col
+  <v-container class="grey lighten-5 pt-20">
+    <v-row style="width: 90%" class="pt-5">
+      <v-col class="text-right"
         ><v-img
           :src="
             filmStore?.selectedFilm?.fields?.Poster[0]?.thumbnails?.large?.url
           "
-          class="poster align-center"
+          class="poster align-center inline-table"
           cover
       /></v-col>
       <v-col>
-        <h1 class="text-xl">{{ filmStore?.selectedFilm?.fields?.Name }}</h1>
-        <h2 class="pb-3">
-          Directed by
-          {{ directorName }}
-        </h2>
-        <blockquote class="py-3">
+        <h1 class="text-xl font-bold" style="line-height: 1.125em">
+          {{ filmStore?.selectedFilm?.fields?.Name }}
+        </h1>
+        <div class="pb-3 pt-2">
+          <span class="italic mr-2"> Directed by</span>
+          <span v-for="director in directorName" :key="director">
+            {{ director }}
+          </span>
+        </div>
+        <blockquote class="py-2">
           {{ filmStore?.selectedFilm?.fields?.Summary }}
         </blockquote>
-        <h3>Year : {{ filmYear }}</h3>
+        <span class="italic">Year :</span>
+        {{ filmYear }}
         <div>
-          Festival Premiere :
+          <span class="italic">Festival Premiere :</span>
           {{ filmStore?.selectedFilm?.fields["Festival Premiere"] }}
         </div>
-        <a :href="filmTrailerLink" target="_blank" class="py-3">
-          <v-btn density="compact" class="bg-purple-200">watch trailer</v-btn>
+        <a :href="filmTrailerLink" target="_blank" class="block">
+          <v-btn density="compact" class="bg-purple-200 mt-5"
+            >watch trailer</v-btn
+          >
         </a>
       </v-col>
     </v-row>
@@ -70,30 +77,48 @@
 </template>
 <script>
 import { useFilmStore } from "@/stores/filmStore";
-import { useRouter } from "vue-router";
-import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
+import { ref, watchEffect } from "vue";
 export default {
   setup() {
-    const router = useRouter();
+    const route = useRoute();
     const filmStore = useFilmStore();
-    const filmName = router.params.name;
-    const cachedFilm = ref(null); // Store cached film data
-
-    const film = computed(() => {
-      // Check if film is already
-      if (cachedFilm.value && cachedFilm.value.name === filmName.value) {
-        return cachedFilm.value;
-      }
-
-      // Fetch film data if not cached or name changed
-      const film = filmStore.findFilmByName(filmName.value);
-      // if (film) {
-      //   cachedFilm.value = film; // Update cache
-      // }
-      return film;
-    });
-
+    const filmName = route.params.name;
+    // State to handle data fetching status and potential errors
+    const film = ref(null);
+    const isFetching = ref(false); // Boolean flag for loading state
+    const fetchError = ref(null); // String to hold error message
     const tab = ref("subjects");
+
+    // const cachedFilm = ref(null); // Store cached film data
+
+    // const film = computed(() => {
+    //   // Check if film is already
+    //   if (cachedFilm.value && cachedFilm.value.name === filmName.value) {
+    //     return cachedFilm.value;
+    //   }
+
+    // Fetch and handle data with watchEffect for reactivity
+    watchEffect(() => {
+      if (filmName && !film.value) {
+        isFetching.value = true; // Set loading state
+        filmStore
+          .fetchFilm(filmName)
+          .then((data) => {
+            if (data && data.length > 0) {
+              film.value = data[0]; // Assuming the first match is correct
+            } else {
+              fetchError.value = `Film not found: ${filmName}`;
+            }
+          })
+          .catch((error) => {
+            fetchError.value = `Error fetching film: ${error}`;
+          })
+          .finally(() => {
+            isFetching.value = false; // Clear loading state
+          });
+      }
+    }, [filmName]);
 
     const directorName = filmStore?.selectedFilm?.fields["Name (from Director)"]
       ?.toString()

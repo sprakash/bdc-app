@@ -3,7 +3,27 @@ import { defineStore } from "pinia";
 export const useFilmmakerStore = defineStore("filmmaker", {
   state: () => ({
     selectedFilmmaker: null,
+    filmmakersMasonryView: [],
   }),
+  getters: {
+    async getMasonryObjects() {
+      try {
+        const url = `https://egq0zydibl.execute-api.us-east-2.amazonaws.com/main/filmmaker-records`;
+        const response = await fetch(url);
+        const data = await response.json();
+        return data.records.slice(0, 12).map((record) => {
+          return {
+            title: record.fields.Name,
+            img: record.fields.Headshot[0]?.url,
+            random: Math.random() * 10,
+          };
+        });
+      } catch (error) {
+        console.error("Error fetching or processing data:", error);
+      }
+      return this.getMasonryObjects; // Make sure to return here
+    },
+  },
   actions: {
     setSelectedFilmmaker(filmmaker) {
       this.selectedFilmmaker = filmmaker;

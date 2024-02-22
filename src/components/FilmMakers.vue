@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="py-20">
     <div v-if="filmmakerRecords" id="filmmakerRecords">
       <h1>Film Makers Directory</h1>
       <DisplayDataTable :records="filmmakerRecords" dataType="filmmaker" />

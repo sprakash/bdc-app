@@ -3,7 +3,7 @@
     <HeaderNavigation />
     <!-- <div class="font-bold text-sm text-blue-200">Common header content</div> -->
 
-    <div v-if="$route.path === '/'">
+    <div v-if="$route.path === '/'" class="pt-15">
       <section class="text-center">
         <h1 class="header text-black font-semibold mt-10">
           BLACK DOCUMENTARY COLLECTIVE

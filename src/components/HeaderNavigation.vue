@@ -109,6 +109,12 @@ export default {
 };
 </script>
 <style>
+#topNav {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+}
+
 #topNav .v-btn {
   font-size: 1.25em;
   border-radius: 0;

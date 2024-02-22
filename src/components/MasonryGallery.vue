@@ -10,7 +10,7 @@
                 v-transition="{ name: 'v-fade-transition' }"
               >
                 <v-img
-                  src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                  :src="item.img"
                   class="align-end"
                   gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                   :style="{ height: `${(item.random + 5) * 50}px` }"
@@ -30,53 +30,63 @@
 </template>
 
 <script>
-export default {
-  setup() {
-    const items = [
-      {
-        title: "First",
-        random: Math.random() * 10,
-      },
-      {
-        title: "Second",
-        random: Math.random() * 10,
-      },
-      {
-        title: "Third",
-        random: Math.random() * 10,
-      },
-      {
-        title: "Fourth",
-        random: Math.random() * 10,
-      },
-      {
-        title: "Fifth",
-        random: Math.random() * 10,
-      },
-      {
-        title: "Sixth",
-        random: Math.random() * 10,
-      },
-      {
-        title: "Seventh",
-        random: Math.random() * 10,
-      },
-      {
-        title: "Eigth",
-        random: Math.random() * 10,
-      },
-      {
-        title: "Ninth",
-        random: Math.random() * 10,
-      },
-      {
-        title: "Tenth",
-        random: Math.random() * 10,
-      },
-    ];
+import { useFilmmakerStore } from "@/stores/filmmakerStore";
 
-    return { items };
+export default {
+  async setup() {
+    const filmstore = useFilmmakerStore();
+    const items = await filmstore.getMasonryObjects();
+    console.log(" MASONRY OBJECTS ", items);
+    return {
+      items,
+    };
   },
+
+  //   const items = [
+  //     {
+  //       title: "First",
+  //       random: Math.random() * 10,
+  //     },
+  //     {
+  //       title: "Second",
+  //       random: Math.random() * 10,
+  //     },
+  //     {
+  //       title: "Third",
+  //       random: Math.random() * 10,
+  //     },
+  //     {
+  //       title: "Fourth",
+  //       random: Math.random() * 10,
+  //     },
+  //     {
+  //       title: "Fifth",
+  //       random: Math.random() * 10,
+  //     },
+  //     {
+  //       title: "Sixth",
+  //       random: Math.random() * 10,
+  //     },
+  //     {
+  //       title: "Seventh",
+  //       random: Math.random() * 10,
+  //     },
+  //     {
+  //       title: "Eigth",
+  //       random: Math.random() * 10,
+  //     },
+  //     {
+  //       title: "Ninth",
+  //       random: Math.random() * 10,
+  //     },
+  //     {
+  //       title: "Tenth",
+  //       random: Math.random() * 10,
+  //     },
+  //   ];
+
+  //   return { items };
+  // },
 };
 </script>
 <style scoped>
