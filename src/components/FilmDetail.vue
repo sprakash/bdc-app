@@ -34,40 +34,67 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-card v-transition="{ name: 'v-fade-transition' }">
+  <v-card>
     <v-tabs v-model="tab" bg-color="primary">
       <v-tab value="subjects">Subjects</v-tab>
       <v-tab value="producer">Producer</v-tab>
       <v-tab value="director">Director</v-tab>
       <v-tab value="editor">Editor</v-tab>
-      <v-tab value="camera">Camera / Cinematopher</v-tab>
+      <v-tab value="camera">Camera / Cinematographer</v-tab>
     </v-tabs>
 
     <v-card-text>
       <v-window v-model="tab">
-        <v-window-item value="subjects" :transition="false">
+        <v-window-item value="subjects">
           <ul>
-            <li v-for="tag in film.fields?.Tags" :key="tag">
+            <li v-for="tag in film.fields.Tags" :key="tag">
               <span>{{ tag }}</span>
             </li>
           </ul>
-          <!-- {{ filmStore?.selectedFilm?.fields?.Tags }} -->
         </v-window-item>
 
-        <v-window-item value="producer" :transition="false">
-          {{ film.fields?.Summary }}
+        <v-window-item value="producer">
+          <ul>
+            <li
+              v-for="producer in film.fields['Name (from Producer)']"
+              :key="producer"
+            >
+              <span>{{ producer }}</span>
+            </li>
+          </ul>
         </v-window-item>
 
-        <v-window-item value="director" :transition="false">
-          {{ film.fields?.Tags }}
+        <v-window-item value="director">
+          <ul>
+            <li
+              v-for="director in film.fields['Name (from Director)']"
+              :key="director"
+            >
+              <span>{{ director }}</span>
+            </li>
+          </ul>
         </v-window-item>
 
-        <v-window-item value="editor" :transition="false">
-          test test test
+        <v-window-item value="editor">
+          <ul>
+            <li
+              v-for="editor in film.fields['Name (from Editor)']"
+              :key="editor"
+            >
+              <span>{{ editor }}</span>
+            </li>
+          </ul>
         </v-window-item>
 
-        <v-window-item value="camera" :transition="false">
-          camera
+        <v-window-item value="camera">
+          <ul>
+            <li
+              v-for="editor in film.fields['Name (from Camera Person)']"
+              :key="editor"
+            >
+              <span>{{ editor }}</span>
+            </li>
+          </ul>
         </v-window-item>
       </v-window>
     </v-card-text>
