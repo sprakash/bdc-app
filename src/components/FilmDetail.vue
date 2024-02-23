@@ -34,7 +34,7 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-card>
+  <v-card v-if="film">
     <v-tabs v-model="tab" bg-color="primary">
       <v-tab value="subjects">Subjects</v-tab>
       <v-tab value="producer">Producer</v-tab>
