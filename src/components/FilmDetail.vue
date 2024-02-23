@@ -1,17 +1,15 @@
 <template>
-  <v-container class="grey lighten-5 pt-20">
+  <v-container class="grey lighten-5 pt-20" v-if="film">
     <v-row style="width: 90%" class="pt-5">
-      <v-col class="text-right"
-        ><v-img
-          :src="
-            filmStore?.selectedFilm?.fields?.Poster[0]?.thumbnails?.large?.url
-          "
+      <v-col class="text-right">
+        <v-img
+          :src="film.fields?.Poster[0]?.thumbnails?.large?.url"
           class="poster align-center inline-table"
           cover
       /></v-col>
       <v-col>
         <h1 class="text-xl font-bold" style="line-height: 1.125em">
-          {{ filmStore?.selectedFilm?.fields?.Name }}
+          {{ film.fields?.Name }}
         </h1>
         <div class="pb-3 pt-2">
           <span class="italic mr-2"> Directed by</span>
@@ -20,13 +18,13 @@
           </span>
         </div>
         <blockquote class="py-2">
-          {{ filmStore?.selectedFilm?.fields?.Summary }}
+          {{ film.fields?.Summary }}
         </blockquote>
         <span class="italic">Year :</span>
         {{ filmYear }}
         <div>
           <span class="italic">Festival Premiere :</span>
-          {{ filmStore?.selectedFilm?.fields["Festival Premiere"] }}
+          {{ film.fields["Festival Premiere"] }}
         </div>
         <a :href="filmTrailerLink" target="_blank" class="block">
           <v-btn density="compact" class="bg-purple-200 mt-5"
@@ -49,7 +47,7 @@
       <v-window v-model="tab">
         <v-window-item value="subjects" :transition="false">
           <ul>
-            <li v-for="tag in filmStore?.selectedFilm?.fields?.Tags" :key="tag">
+            <li v-for="tag in film.fields?.Tags" :key="tag">
               <span>{{ tag }}</span>
             </li>
           </ul>
@@ -57,11 +55,11 @@
         </v-window-item>
 
         <v-window-item value="producer" :transition="false">
-          {{ filmStore?.selectedFilm?.fields?.Summary }}
+          {{ film.fields?.Summary }}
         </v-window-item>
 
         <v-window-item value="director" :transition="false">
-          {{ filmStore?.selectedFilm?.fields?.Tags }}
+          {{ film.fields?.Tags }}
         </v-window-item>
 
         <v-window-item value="editor" :transition="false">
