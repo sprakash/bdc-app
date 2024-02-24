@@ -109,7 +109,7 @@
         <h1 class="centered-content header text-black font-bold mb-5">
           RESOURCES
         </h1>
-        <div class="content-text-2 text-center px-5 mb-5 flex">
+        <div class="content-text-2 text-center px-5 mb-5 flex justify-center">
           <div>
             <iframe
               title="vimeo-player"
