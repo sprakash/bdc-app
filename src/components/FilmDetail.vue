@@ -45,7 +45,7 @@
 
     <v-card-text>
       <v-window v-model="tab">
-        <v-window-item value="subjects">
+        <v-window-item value="subjects" :transition="false">
           <ul>
             <li v-for="tag in film.fields.Tags" :key="tag">
               <span>{{ tag }}</span>
@@ -53,7 +53,7 @@
           </ul>
         </v-window-item>
 
-        <v-window-item value="producer">
+        <v-window-item value="producer" :transition="false">
           <ul>
             <li
               v-for="producer in film.fields['Name (from Producer)']"
@@ -64,7 +64,7 @@
           </ul>
         </v-window-item>
 
-        <v-window-item value="director">
+        <v-window-item value="director" :transition="false">
           <ul>
             <li
               v-for="director in film.fields['Name (from Director)']"
@@ -75,7 +75,7 @@
           </ul>
         </v-window-item>
 
-        <v-window-item value="editor">
+        <v-window-item value="editor" :transition="false">
           <ul>
             <li
               v-for="editor in film.fields['Name (from Editor)']"
@@ -86,7 +86,7 @@
           </ul>
         </v-window-item>
 
-        <v-window-item value="camera">
+        <v-window-item value="camera" :transition="false">
           <ul>
             <li
               v-for="editor in film.fields['Name (from Camera Person)']"
