@@ -442,7 +442,7 @@ export default {
   border: 1px solid grey;
   background-color: #892482f0;
   text-align: center;
-  font-size: 0.85em;
+  font-size: 0.75em;
 }
 
 .masonry::before,
