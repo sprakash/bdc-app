@@ -73,7 +73,7 @@
 
       <hr />
 
-      <section class="centered-content mt-12 px-16 mb-10">
+      <section class="centered-content mt-12 px-16 mb-5">
         <h1 class="header text-black font-bold mb-5">Become A Member</h1>
         <p class="mb-5 text-center">
           Producers, directors, cinematographers, editors, curators,
@@ -95,7 +95,12 @@
           Empower your teams to work autonomously, without losing sight of
           what’s happening.
         </p>
-        <p class="mb-5"><a href="#">Learn more</a></p>
+        <v-btn class="mb-5 bg-purple-900 text-yellow-300"
+          ><a
+            href="mailto:bdc@blackdocumentarycollective.org?subject=Membership Inquiry for Black Documentary Collective"
+            >SEND US A MESSAGE</a
+          ></v-btn
+        >
         <v-img src="@/assets/meetbdc.jpg" alt="meetbdc" />
       </section>
 
@@ -173,6 +178,7 @@
                 name="submit"
                 title="PayPal - The safer, easier way to pay online!"
                 alt="Donate with PayPal button"
+                class="w-3/4"
               />
               <img
                 alt=""
