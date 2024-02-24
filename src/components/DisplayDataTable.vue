@@ -511,8 +511,13 @@ export default {
   top: 8px;
 }
 
+#films p {
+  color: #ffda1a;
+}
+
 #films .card-sub {
   top: -12px;
+  background-color: #ffda1a;
 }
 
 table {
@@ -523,7 +528,7 @@ tbody {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  background-color: #d696d6;
+  background-color: #892482;
 }
 
 .v-card-subtitle {
