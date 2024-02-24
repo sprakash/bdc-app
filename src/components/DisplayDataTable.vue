@@ -337,7 +337,9 @@ export default {
       if (props.dataType === "filmmaker") {
         if (selectedFilmmakerSubject.value !== "ALL") {
           filteredRecords.value = props.records.filter((record) => {
-            return record.fields["Subject of Films"]?.includes(newSubject);
+            return record.fields["Subject of Films"]?.includes(
+              newSubject.toLowerCase()
+            );
           });
         } else {
           console.log(" WE ARE AT ALL", props.records);

@@ -26,6 +26,10 @@
           <span class="italic">Festival Premiere :</span>
           {{ film.fields["Festival Premiere"] }}
         </div>
+        <div>
+          <span class="italic">Broadcast Premiere :</span>
+          {{ film.fields["Broadcast Premiere"] }}
+        </div>
         <a :href="filmTrailerLink" target="_blank" class="block">
           <v-btn density="compact" class="bg-purple-200 mt-5"
             >watch trailer</v-btn
