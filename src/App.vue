@@ -138,19 +138,48 @@
         <h1 class="centered-content header text-black font-bold mb-5">
           FILMMAKER DIRECTORY
         </h1>
-        <p class="content-text-2 text-center px-5 mb-5">
-          Browse through our directory of talented filmmakers of our community
+        <p class="text-center px-5 mb-5">
+          Browse through our
+          <a
+            href="/filmmakers"
+            target="_blank"
+            class="text-blue-600 font-semibold cursor-pointer"
+            >directory</a
+          >
+          of talented filmmakers of our community
         </p>
-        <MasonryGallery class="px-12" />
+        <div class="masonry" @click="goToFilmmakers">
+          <div
+            v-for="mView in masonryObjects"
+            :key="mView"
+            class="masonry-item"
+          >
+            <img :src="mView.img" :alt="mView.title" />
+            <p>{{ mView.title }}</p>
+          </div>
+        </div>
       </section>
 
       <hr />
 
       <section class="centered-content mb-12 mt-12 mb-5">
         <h1 class="header text-black font-bold mb-5">FILM CATALOG</h1>
-        <p class="content-text-2 text-center px-5 mb-5">
-          Browse through the work of our filmmakers
+        <p class="text-center px-5 mb-5">
+          Browse through the
+          <a
+            href="/filmmakers"
+            target="_blank"
+            class="text-blue-600 font-semibold cursor-pointer"
+            >work</a
+          >
+          of our filmmakers
         </p>
+        <div class="masonry" @click="goToFilmList">
+          <div v-for="mView in masonryFilms" :key="mView" class="masonry-item">
+            <img :src="mView.img" :alt="mView.title" />
+            <p>{{ mView.title }}</p>
+          </div>
+        </div>
       </section>
 
       <hr />
@@ -300,15 +329,16 @@
 
 <script>
 import HeaderNavigation from "@/components/HeaderNavigation.vue";
-import MasonryGallery from "@/components/MasonryGallery.vue";
 import { useFilmStore } from "@/stores/filmStore";
+import { useFilmmakerStore } from "@/stores/filmmakerStore";
 import { useRouter } from "vue-router";
 import { ref, computed } from "vue";
 
 export default {
-  components: { HeaderNavigation, MasonryGallery },
+  components: { HeaderNavigation },
   setup() {
     const filmStore = useFilmStore(); // Access filmStore here
+    const filmmakerStore = useFilmmakerStore();
     const router = useRouter();
     const message = ref("Enter your message");
     const contactName = ref(""); // Initialize with empty string
@@ -330,11 +360,34 @@ export default {
       )}`;
       window.open(mailtoUrl, "_blank");
     };
+
+    const masonryObjects = ref();
+    const masonryFilms = ref();
+
+    filmmakerStore.getMasonryObjects.then((data) => {
+      masonryObjects.value = data;
+    });
+
+    filmStore.getMasonryFilms.then((data) => {
+      masonryFilms.value = data;
+    });
+
+    const goToFilmList = () => {
+      router.push("/films");
+    };
+    const goToFilmmakers = () => {
+      router.push("/filmmakers");
+    };
     return {
       router,
       filmStore,
       handleContact,
+      filmmakerStore,
       contactName,
+      masonryObjects,
+      masonryFilms,
+      goToFilmmakers,
+      goToFilmList,
       isValid,
       email,
       message,
@@ -345,6 +398,63 @@ export default {
 };
 </script>
 <style>
+.masonry {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: space-around;
+  height: 600px;
+  width: 45%;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 1em 1.5em;
+  background-color: #ffd91c0f;
+  position: relative;
+  top: -70px;
+}
+
+.masonry-item {
+  width: 23%;
+  position: relative;
+  margin: 0.5em 0.25em;
+}
+
+.masonry-item:hover {
+  box-shadow: 5px 10px #fed81b5c;
+  cursor: pointer;
+}
+
+.masonry-item img {
+  border-radius: 5%;
+}
+
+.masonry-item p {
+  position: absolute;
+  top: 88%;
+  color: white;
+  width: 100%;
+  border: 1px solid grey;
+  background-color: #892482f0;
+  text-align: center;
+}
+
+.masonry::before,
+.masonry::after {
+  content: "";
+  flex-basis: 100%;
+  width: 0;
+  order: 2;
+}
+
+.masonry-item:nth-child(3n + 1) {
+  order: 1;
+}
+.masonry-item:nth-child(3n + 2) {
+  order: 2;
+}
+.masonry-item:nth-child(3n) {
+  order: 3;
+}
+
 button[type="submit"] {
   margin: 0 auto;
 }

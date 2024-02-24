@@ -14,6 +14,24 @@ export const useFilmStore = defineStore("film", {
     getSubjects() {
       return this.subjects;
     },
+    async getMasonryFilms() {
+      try {
+        const url = `https://egq0zydibl.execute-api.us-east-2.amazonaws.com/main/film-records`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        // Shuffle the array
+        data.records.sort(() => Math.random() - 0.5);
+        return data.records.slice(0, 12).map((record) => {
+          return {
+            title: record.fields.Name,
+            img: record.fields.Poster[0]?.thumbnails?.large?.url,
+          };
+        });
+      } catch (error) {
+        console.error("Error fetching or processing data:", error);
+      }
+    },
   },
   actions: {
     setSelectedFilm(film) {
