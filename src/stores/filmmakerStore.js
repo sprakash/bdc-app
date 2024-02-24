@@ -11,18 +11,18 @@ export const useFilmmakerStore = defineStore("filmmaker", {
       try {
         const url = `https://egq0zydibl.execute-api.us-east-2.amazonaws.com/main/filmmaker-records`;
         const response = await fetch(url);
-        const data = await response.json();
+        const filmmakerData = await response.json();
 
         // Shuffle the array
-        data.records.sort(() => Math.random() - 0.5);
-        return data.records.slice(0, 12).map((record) => {
+        filmmakerData?.records?.sort(() => Math.random() - 0.5);
+        return filmmakerData?.records?.slice(0, 13).map((filmmakerRecord) => {
           return {
-            title: record.fields.Name,
-            img: record.fields.Headshot[0]?.url,
+            title: filmmakerRecord?.fields?.Name,
+            img: filmmakerRecord?.fields?.Headshot[0]?.url,
           };
         });
       } catch (error) {
-        console.error("Error fetching or processing data:", error);
+        console.error("Error fetching or processing data for filmmakers");
       }
     },
     getFilmmakersFilms() {

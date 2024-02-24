@@ -148,7 +148,8 @@
           >
           of talented filmmakers of our community
         </p>
-        <div class="masonry" @click="goToFilmmakers">
+
+        <div class="masonry" @click="goToFilmmakers" v-if="masonryObjects">
           <div
             v-for="mView in masonryObjects"
             :key="mView"
@@ -157,6 +158,9 @@
             <img :src="mView.img" :alt="mView.title" />
             <p>{{ mView.title }}</p>
           </div>
+        </div>
+        <div v-else class="flex justify-center">
+          <v-progress-circular indeterminate size="64"></v-progress-circular>
         </div>
       </section>
 
@@ -174,11 +178,14 @@
           >
           of our filmmakers
         </p>
-        <div class="masonry" @click="goToFilmList">
+        <div class="masonry" @click="goToFilmList" v-if="masonryFilms">
           <div v-for="mView in masonryFilms" :key="mView" class="masonry-item">
             <img :src="mView.img" :alt="mView.title" />
             <p>{{ mView.title }}</p>
           </div>
+        </div>
+        <div v-else>
+          <v-progress-circular indeterminate size="64"></v-progress-circular>
         </div>
       </section>
 
@@ -409,11 +416,11 @@ export default {
   padding: 1em 1.5em;
   background-color: #ffd91c0f;
   position: relative;
-  top: -70px;
+  top: -30px;
 }
 
 .masonry-item {
-  width: 23%;
+  width: 25%;
   position: relative;
   margin: 0.5em 0.25em;
 }
@@ -435,6 +442,7 @@ export default {
   border: 1px solid grey;
   background-color: #892482f0;
   text-align: center;
+  font-size: 0.85em;
 }
 
 .masonry::before,

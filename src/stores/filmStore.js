@@ -21,15 +21,15 @@ export const useFilmStore = defineStore("film", {
         const data = await response.json();
 
         // Shuffle the array
-        data.records.sort(() => Math.random() - 0.5);
-        return data.records.slice(0, 12).map((record) => {
+        data?.records?.sort(() => Math.random() - 0.5);
+        return data?.records?.slice(0, 13).map((record) => {
           return {
-            title: record.fields.Name,
-            img: record.fields.Poster[0]?.thumbnails?.large?.url,
+            title: record?.fields?.Name,
+            img: record?.fields?.Poster[0]?.thumbnails?.large?.url,
           };
         });
       } catch (error) {
-        console.error("Error fetching or processing data:", error);
+        console.error("Error fetching or processing data for films");
       }
     },
   },
@@ -41,15 +41,15 @@ export const useFilmStore = defineStore("film", {
       try {
         const url = `https://egq0zydibl.execute-api.us-east-2.amazonaws.com/main/film-records`;
         const response = await fetch(url);
-        const data = await response.json();
-        return data.records.filter(
-          (record) =>
-            record.fields.Name.trim()
+        const filmData = await response.json();
+        return filmData.records.filter(
+          (filmRecord) =>
+            filmRecord.fields.Name.trim()
               .toLowerCase()
               .replace(/[^a-z0-9-]+/g, "-") === film_param
         );
       } catch (error) {
-        console.error("Error fetching the film with the param:", error);
+        console.error("Error fetching the film with the param");
         error.value = error.message;
       }
     },
