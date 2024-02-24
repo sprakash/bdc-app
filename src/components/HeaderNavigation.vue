@@ -8,7 +8,14 @@
         id="bdc-logo"
       />
       <v-spacer />
-      <v-btn text to="/">Home</v-btn>
+      <v-btn
+        text
+        to="/"
+        :class="{
+          'v-btn--active': route.path == '/',
+        }"
+        >Home</v-btn
+      >
       <v-btn
         text
         to="/filmmakers"
