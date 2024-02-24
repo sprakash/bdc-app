@@ -232,34 +232,59 @@
 
       <section class="centered-content mb-12 mt-12 px-16">
         <!-- contact form-->
-        <h1 class="header text-black font-bold mb-5">Connect with Us</h1>
+        <h1 class="header text-black font-bold mb-5">Contact Us</h1>
         <p class="content-text-2 text-center px-5 mb-12">
-          Please fill out this form if you'd like to connect with us
+          Please fill out this form if you'd like to contact us
         </p>
-        <template v-if="showForm">
-          <v-sheet width="300" class="mx-auto">
-            <v-form @submit.prevent>
-              <v-text-field
-                v-model="firstName"
-                :rules="rules"
-                label="First name"
-              ></v-text-field>
-              <v-text-field
-                v-model="email"
-                :rules="rules"
-                label="Email"
-              ></v-text-field>
-              <v-text-field
-                v-model="message"
-                :rules="rules"
-                label="Message"
-              ></v-text-field>
-              <v-btn type="submit" color="warning" block class="mt-2"
-                >Submit</v-btn
-              >
-            </v-form>
-          </v-sheet>
-        </template>
+        <v-form
+          id="bdc-contact"
+          @submit.prevent="handleContact"
+          ref="form"
+          class="w-1/2 flex flex-col justify-center"
+        >
+          <v-text-field
+            v-model="contactName"
+            label="Name"
+            required
+            :rules="[
+              (v) => !!v || 'Name is required',
+              (v) => v.length <= 50 || 'Name must be less than 50 characters',
+            ]"
+          >
+            <v-error-messages>{{ $error }}</v-error-messages>
+          </v-text-field>
+          <v-text-field
+            v-model="email"
+            label="Email"
+            type="email"
+            required
+            :rules="[
+              (v) => !!v || 'Email is required',
+              (v) => /^\S+@\S+\.\S+$/.test(v) || 'Invalid email format',
+            ]"
+          >
+            <v-error-messages>{{ $error }}</v-error-messages>
+          </v-text-field>
+          <v-text-field
+            v-model="message"
+            label="Enter your message"
+            type="text"
+            required
+            :rules="[
+              (v) => !!v || 'Message is required',
+              (v) => v.length > 0 || 'Message should have text',
+            ]"
+          >
+            <v-error-messages>{{ $error }}</v-error-messages>
+          </v-text-field>
+          <v-btn
+            type="submit"
+            color="primary"
+            :disabled="!isValid"
+            class="w-1/2 text-yellow-200 bg-purple-900"
+            >Contact Us</v-btn
+          >
+        </v-form>
       </section>
     </div>
 
@@ -278,32 +303,58 @@ import HeaderNavigation from "@/components/HeaderNavigation.vue";
 import MasonryGallery from "@/components/MasonryGallery.vue";
 import { useFilmStore } from "@/stores/filmStore";
 import { useRouter } from "vue-router";
+import { ref, computed } from "vue";
 
 export default {
   components: { HeaderNavigation, MasonryGallery },
-
-  data: () => ({
-    firstName: "",
-    email: "",
-    message: "",
-    rules: [
-      (value) => {
-        if (value) return true;
-        return "Field must not be empty.";
-      },
-    ],
-    showForm: true,
-  }),
-
   setup() {
     const filmStore = useFilmStore(); // Access filmStore here
     const router = useRouter();
+    const message = ref("Enter your message");
+    const contactName = ref(""); // Initialize with empty string
+    const email = ref(""); // Initialize with empty string
+    const rules = ref([
+      (value) => !!value || "Field must not be empty.",
+      (value) => /^\S+@\S+\.\S+$/.test(value) || "Invalid email format.", // Email validation
+    ]);
 
-    return { router, filmStore };
+    const showForm = true;
+    const isValid = computed(
+      () => contactName.value && email.value && message.value
+    );
+
+    const handleContact = () => {
+      // Check for validation
+      const mailtoUrl = `mailto:prakashnitza@gmail.com?subject=Contact Question for Black Documentary Collective&body=${encodeURIComponent(
+        `Name: ${contactName.value}\nEmail: ${email.value}`
+      )}`;
+      window.open(mailtoUrl, "_blank");
+    };
+    return {
+      router,
+      filmStore,
+      handleContact,
+      contactName,
+      isValid,
+      email,
+      message,
+      rules,
+      showForm,
+    };
   },
 };
 </script>
 <style>
+button[type="submit"] {
+  margin: 0 auto;
+}
+
+#bdc-contact .v-btn__overlay {
+  background-color: #064fa1;
+}
+#bdc-contact .v-btn__content {
+  color: white;
+}
 #bdc-animated {
   width: 100%;
   display: inline-block;
