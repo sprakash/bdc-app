@@ -152,15 +152,38 @@
       <section class="centered-content pt-24 mb-5" id="donate">
         <h1 class="header text-black font-bold mb-5">DONATE</h1>
         <div class="content-text-2 text-center px-5 mb-5">
-          <a
-            href="https://www.paypal.com/donate?token=XLu6eUQWL61AAxHwTOP1KKA3OVelGNhJMC9bl-AFk-1aeqOSPs80jUI24bABc6xVVqmC6u6wpp0_F9Zz"
-            target="_blank"
-            class="flex justify-center"
-          >
+          <div id="paypal-code" class="flex w-full justify-center">
             <v-img src="@/assets/gimmefive.png" max-width="200" />
 
-            <v-img src="@/assets/paypal.png" max-width="300" max-height="171"
-          /></a>
+            <form
+              action="https://www.paypal.com/cgi-bin/webscr"
+              method="post"
+              target="_blank"
+            >
+              <input type="hidden" name="cmd" value="_s-xclick" />
+              <input
+                type="hidden"
+                name="hosted_button_id"
+                value="TKJWWVGP4YC9C"
+              />
+              <input
+                type="image"
+                src="https://vespertine.fatcow.com/paypal-donate-button-high-quality-png%20300.png"
+                border="0"
+                name="submit"
+                title="PayPal - The safer, easier way to pay online!"
+                alt="Donate with PayPal button"
+              />
+              <img
+                alt=""
+                border="0"
+                src="https://www.paypal.com/en_US/i/scr/pixel.gif"
+                width="1"
+                height="1"
+              />
+            </form>
+          </div>
+
           <p class="text-center inline-block pt-10 w-50">
             Show your support for our all-volunteer organization by making a
             tax-deductible donation! Whether you give $5 or $500, your donation
