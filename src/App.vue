@@ -73,7 +73,7 @@
 
       <hr />
 
-      <section class="centered-content mb-12 mt-12 px-16">
+      <section class="centered-content mt-12 px-16 mb-10">
         <h1 class="header text-black font-bold mb-5">Become A Member</h1>
         <p class="mb-5 text-center">
           Producers, directors, cinematographers, editors, curators,
@@ -100,7 +100,7 @@
       </section>
 
       <hr />
-      <section class="mb-12 mt-12" id="resources">
+      <section class="mb-12 pt-24" id="resources">
         <h1 class="centered-content header text-black font-bold mb-5">
           RESOURCES
         </h1>
@@ -149,7 +149,7 @@
       </section>
 
       <hr />
-      <section class="centered-content mt-12 mb-5" id="donate">
+      <section class="centered-content pt-24 mb-5" id="donate">
         <h1 class="header text-black font-bold mb-5">DONATE</h1>
         <div class="content-text-2 text-center px-5 mb-5">
           <a
