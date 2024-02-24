@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'flex justify-between w-full': useFlex }">
+  <div class="flex">
     <div class="w-1/5" v-if="dataType === 'film'">
       <v-card
         v-if="dataType === 'film' && currentPageRecords.length > 0"
@@ -8,17 +8,41 @@
       >
         <v-select
           v-model="selectedSubject"
-          label="By Subject"
+          label="By Film Subject"
           :items="uniqueTags"
           id="selectedSubject"
         >
         </v-select>
         <v-select
           v-model="selectedYear"
-          label="By Year"
+          label="By Film Year"
           :items="uniqueYears"
           v-if="dataType === 'film'"
           id="selectedYear"
+        >
+        </v-select>
+      </v-card>
+    </div>
+
+    <div class="w-1/5" v-if="dataType === 'filmmaker'">
+      <v-card
+        v-if="dataType === 'filmmaker' && currentPageRecords.length > 0"
+        class="p-3"
+        id="byFilmmakerSubject"
+      >
+        <v-select
+          v-model="selectedFilmmakerSubject"
+          label="By Filmmaker Subject"
+          :items="uniqueFilmmakerSubjects"
+          id="selectedFilmmakerSubject"
+        >
+        </v-select>
+        <v-select
+          v-model="selectedRole"
+          label="By Filmmaker Roles"
+          :items="uniqueRoles"
+          v-if="dataType === 'filmmaker'"
+          id="selectedRole"
         >
         </v-select>
       </v-card>
@@ -184,6 +208,8 @@ export default {
     const search = ref("");
     const selectedSubject = ref("ALL"); // Initialize selectedSubject
     const selectedYear = ref("SELECT");
+    const selectedFilmmakerSubject = ref("all");
+    const selectedRole = ref("SELECT");
     const page = ref(1); // Initialize page number
     const filteredRecords = ref([...props.records]);
 
@@ -193,8 +219,6 @@ export default {
       { text: "Bio", value: "fields.Bio" },
       { text: "Headshot", value: "Headshot" },
     ];
-
-    const useFlex = props.dataType === "film" ? true : false;
 
     // Data source consistency check (optional)
     if (!props.records || !props.records.length) {
@@ -308,6 +332,20 @@ export default {
       }
     });
 
+    watch(selectedFilmmakerSubject, async (newSubject, oldSubject) => {
+      // Update filteredRecords when selectedSubject changes
+      if (props.dataType === "filmmaker") {
+        if (selectedFilmmakerSubject.value !== "ALL") {
+          filteredRecords.value = props.records.filter((record) => {
+            return record.fields["Subject of Films"]?.includes(newSubject);
+          });
+        } else {
+          console.log(" WE ARE AT ALL", props.records);
+          filteredRecords.value = props.records;
+        }
+      }
+    });
+
     watch(selectedYear, async (newYear, oldYear) => {
       if (props.dataType === "film") {
         if (selectedYear.value !== "SELECT") {
@@ -319,6 +357,22 @@ export default {
           console.log(" FOUND BASED ON YEAR ", filteredRecords.value);
         } else {
           console.log("WE ARE AT YEAR SELECT", props.records);
+          filteredRecords.value = props.records;
+        }
+      }
+    });
+
+    watch(selectedRole, async (newRole, oldRole) => {
+      if (props.dataType === "filmmaker") {
+        if (selectedRole.value !== "SELECT") {
+          filteredRecords.value = props.records.filter((record) => {
+            return record.fields["Name (from Roles)"]?.includes(
+              newRole.toString()
+            );
+          });
+          console.log(" FOUND BASED ON ROLE ", filteredRecords.value);
+        } else {
+          console.log("WE ARE AT ROLE  SELECT", props.records);
           filteredRecords.value = props.records;
         }
       }
@@ -345,17 +399,46 @@ export default {
           yearsSet.add(year);
         });
       });
+
       const yearsFiltered = Array.from(yearsSet).sort((a, b) => b - a);
       yearsFiltered.unshift("SELECT");
       return yearsFiltered;
     });
 
+    const uniqueFilmmakerSubjects = computed(() => {
+      const filmmakerSubjectsSet = new Set();
+      props.records.forEach((record) => {
+        record.fields["Subject of Films"]?.forEach((subject) => {
+          filmmakerSubjectsSet.add(subject);
+        });
+      });
+      const subjectFiltered = Array.from(filmmakerSubjectsSet).sort((a, b) =>
+        a.localeCompare(b)
+      );
+      subjectFiltered.unshift("ALL");
+      return subjectFiltered;
+    });
+
+    const uniqueRoles = computed(() => {
+      const roleSet = new Set();
+      props.records.forEach((record) => {
+        record.fields["Name (from Roles)"]?.forEach((role) => {
+          roleSet.add(role);
+        });
+      });
+
+      const rolesFiltered = Array.from(roleSet).sort((a, b) => b - a);
+      rolesFiltered.unshift("SELECT");
+      return rolesFiltered;
+    });
+
     return {
-      useFlex,
       search,
       headers,
       selectedSubject,
       selectedYear,
+      selectedFilmmakerSubject,
+      selectedRole,
       uniqueTags,
       uniqueYears,
       page,
@@ -363,6 +446,8 @@ export default {
       totalPages,
       totalRecords,
       currentPageRecords,
+      uniqueFilmmakerSubjects,
+      uniqueRoles,
       navigateToFilmDetail,
       navigateToFilmmakerDetail,
     };
@@ -464,7 +549,7 @@ tbody {
 }
 
 #filmmakers {
-  width: 20%;
+  width: 30%;
 }
 
 #filmmakers img.v-img__img.v-img__img--cover,
