@@ -35,6 +35,7 @@
           label="By Filmmaker Subject"
           :items="uniqueFilmmakerSubjects"
           id="selectedFilmmakerSubject"
+          class="uppercase"
         >
         </v-select>
         <v-select
@@ -411,7 +412,7 @@ export default {
       const filmmakerSubjectsSet = new Set();
       props.records.forEach((record) => {
         record.fields["Subject of Films"]?.forEach((subject) => {
-          filmmakerSubjectsSet.add(subject);
+          filmmakerSubjectsSet.add(subject.toUpperCase());
         });
       });
       const subjectFiltered = Array.from(filmmakerSubjectsSet).sort((a, b) =>
@@ -458,6 +459,9 @@ export default {
 </script>
 
 <style>
+#selectedFilmmakerSubject {
+  text-transform: uppercase;
+}
 .headshot {
   width: 350px;
   height: 350px;
