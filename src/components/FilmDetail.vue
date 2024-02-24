@@ -5,7 +5,7 @@
         <v-img
           :src="film.fields?.Poster[0]?.thumbnails?.large?.url"
           class="poster align-center inline-table"
-          cover
+          contain
       /></v-col>
       <v-col>
         <h1 class="text-xl font-bold" style="line-height: 1.125em">

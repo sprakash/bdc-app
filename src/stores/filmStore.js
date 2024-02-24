@@ -35,6 +35,25 @@ export const useFilmStore = defineStore("film", {
         error.value = error.message;
       }
     },
+    async getFilmmakerFilms(filmids) {
+      try {
+        const url = `https://egq0zydibl.execute-api.us-east-2.amazonaws.com/main/film-records`;
+        const response = await fetch(url);
+        const data = await response.json();
+        // Filter records based on film IDs
+
+        const filteredRecords = data.records.filter((record) =>
+          filmids[0].includes(record.id)
+        );
+
+        // Extract film names from matching records
+        const filmNames = filteredRecords.map((record) => record.fields.Name);
+        return filmNames;
+      } catch (error) {
+        console.error("Error fetching the film with the param:", error);
+        error.value = error.message;
+      }
+    },
     setSubjects(subjects) {
       this.subjects = [...subjects];
     },

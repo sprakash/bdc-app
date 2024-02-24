@@ -4,6 +4,7 @@ export const useFilmmakerStore = defineStore("filmmaker", {
   state: () => ({
     selectedFilmmaker: null,
     filmmakersMasonryView: [],
+    filmmakersFilms: [],
   }),
   getters: {
     async getMasonryObjects() {
@@ -23,10 +24,16 @@ export const useFilmmakerStore = defineStore("filmmaker", {
       }
       return this.getMasonryObjects; // Make sure to return here
     },
+    getFilmmakersFilms() {
+      return this.filmmakersFilms;
+    },
   },
   actions: {
     setSelectedFilmmaker(filmmaker) {
       this.selectedFilmmaker = filmmaker;
+    },
+    setFilmmakersFilms(films) {
+      this.filmmakersFilms = films;
     },
     async fetchFilmmaker(filmmaker_param) {
       try {
