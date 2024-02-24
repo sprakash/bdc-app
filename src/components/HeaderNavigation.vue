@@ -9,7 +9,15 @@
       />
       <v-spacer />
       <v-btn text to="/">Home</v-btn>
-      <v-btn text to="/filmmakers">Filmmakers</v-btn>
+      <v-btn
+        text
+        to="/filmmakers"
+        :class="{
+          'v-btn--active':
+            route.name === 'filmmakerDetail' || route.name === 'filmmakers',
+        }"
+        >Filmmakers</v-btn
+      >
       <v-btn
         text
         to="/films"
