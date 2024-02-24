@@ -23,10 +23,10 @@
         <span class="italic">Year :</span>
         {{ filmYear }}
         <div>
-          <span class="italic">Festival Premiere :</span>
-          {{ film.fields["Festival Premiere"] }}
+          <span class="italic">World Premiere :</span>
+          {{ film.fields["World Premiere"] }}
         </div>
-        <div>
+        <div v-if="film.fields['Broadcast Premiere']">
           <span class="italic">Broadcast Premiere :</span>
           {{ film.fields["Broadcast Premiere"] }}
         </div>
