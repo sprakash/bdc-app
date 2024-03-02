@@ -333,22 +333,6 @@ export default {
       }
     });
 
-    watch(selectedFilmmakerSubject, async (newSubject, oldSubject) => {
-      // Update filteredRecords when selectedSubject changes
-      if (props.dataType === "filmmaker") {
-        if (selectedFilmmakerSubject.value !== "ALL") {
-          filteredRecords.value = props.records.filter((record) => {
-            return record.fields["Subject of Films"]?.includes(
-              newSubject.toLowerCase()
-            );
-          });
-        } else {
-          console.log(" WE ARE AT ALL", props.records);
-          filteredRecords.value = props.records;
-        }
-      }
-    });
-
     watch(selectedYear, async (newYear, oldYear) => {
       if (props.dataType === "film") {
         if (selectedYear.value !== "SELECT") {
@@ -365,19 +349,73 @@ export default {
       }
     });
 
+    let resetFilmmakerRoleSelection = false;
+    let resetFilmmakerSubjectSelection = false;
+
+    watch(selectedFilmmakerSubject, async (newSubject, oldSubject) => {
+      // Update filteredRecords when selectedSubject changes
+      if (props.dataType === "filmmaker") {
+        console.log(
+          "selecting Subject",
+          " role is ",
+          selectedRole.value,
+          " subject  selected ",
+          newSubject
+        );
+
+        if (
+          selectedFilmmakerSubject.value !== "ALL" &&
+          !resetFilmmakerSubjectSelection
+        ) {
+          //is role anything other than SELECT if yes, cancel that.
+          if (selectedRole.value !== "SELECT") {
+            resetFilmmakerRoleSelection = true;
+            selectedRole.value = "SELECT";
+          }
+          filteredRecords.value = props.records.filter((record) => {
+            return record.fields["Subject of Films"]?.includes(
+              newSubject.toLowerCase()
+            );
+          });
+        }
+        if (
+          selectedFilmmakerSubject.value === "ALL" &&
+          selectedRole.value === "SELECT"
+        ) {
+          filteredRecords.value = props.records;
+        }
+        resetFilmmakerRoleSelection = false;
+      }
+    });
     watch(selectedRole, async (newRole, oldRole) => {
       if (props.dataType === "filmmaker") {
-        if (selectedRole.value !== "SELECT") {
+        console.log(
+          "selecting Role",
+          " subject is ",
+          selectedFilmmakerSubject.value,
+          " role selected ",
+          newRole
+        );
+        if (selectedRole.value !== "SELECT" && !resetFilmmakerRoleSelection) {
+          if (selectedFilmmakerSubject.value !== "ALL") {
+            resetFilmmakerSubjectSelection = true;
+            selectedFilmmakerSubject.value = "ALL";
+          }
+
           filteredRecords.value = props.records.filter((record) => {
             return record.fields["Name (from Roles)"]?.includes(
               newRole.toString()
             );
           });
           console.log(" FOUND BASED ON ROLE ", filteredRecords.value);
-        } else {
-          console.log("WE ARE AT ROLE  SELECT", props.records);
+        }
+        if (
+          selectedFilmmakerSubject.value === "ALL" &&
+          selectedRole.value === "SELECT"
+        ) {
           filteredRecords.value = props.records;
         }
+        resetFilmmakerSubjectSelection = false;
       }
     });
 
