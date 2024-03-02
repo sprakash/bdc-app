@@ -1,11 +1,7 @@
 <template>
   <div class="flex">
     <div class="w-1/5" v-if="dataType === 'film'">
-      <v-card
-        v-if="dataType === 'film' && currentPageRecords.length > 0"
-        class="p-3"
-        id="bySelect"
-      >
+      <v-card v-if="dataType === 'film'" class="p-3" id="bySelect">
         <v-select
           v-model="selectedSubject"
           label="By Film Subject"
@@ -26,7 +22,7 @@
 
     <div class="w-1/5" v-if="dataType === 'filmmaker'">
       <v-card
-        v-if="dataType === 'filmmaker' && currentPageRecords.length > 0"
+        v-if="dataType === 'filmmaker'"
         class="p-3"
         id="byFilmmakerSubject"
       >
@@ -266,6 +262,8 @@ export default {
     const filterBySearch = (event) => {
       selectedFilmmakerSubject.value = "ALL";
       selectedRole.value = "SELECT";
+      selectedSubject.value = "ALL";
+      selectedYear.value = "SELECT";
       const searchText = event.target.value.toLowerCase();
       console.log(
         event.target.value,
@@ -296,9 +294,24 @@ export default {
         filteredRecords.value = props.records.filter((record) => {
           return (
             record.fields.Name.toLowerCase().includes(searchText) ||
-            record.fields.Summary.toLowerCase().includes(searchText)
+            record.fields.Summary.toLowerCase().includes(searchText) ||
+            record.fields["Name (from Director)"]?.some(
+              (director) => director.toLowerCase() === searchText
+            ) ||
+            record.fields["Name (from Producer)"]?.some(
+              (director) => director.toLowerCase() === searchText
+            ) ||
+            record.fields["Name (from Year)"]?.includes(searchText) ||
+            record.fields?.Tags?.some(
+              (tag) => tag.toLowerCase() === searchText
+            ) ||
+            record.fields["World Premiere"]
+              ?.toLowerCase()
+              .includes(searchText) ||
+            record.fields.Summary?.toLowerCase().includes(searchText)
           );
         });
+        console.log(filteredRecords.value.length);
       }
     };
 
@@ -329,43 +342,61 @@ export default {
       }
     });
 
+    let resetFilmYear = false;
+    let resetFilmSubject = false;
+
     watch(selectedSubject, async (newSubject, oldSubject) => {
+      document.getElementById("searchField").value = "";
+
       // Update filteredRecords when selectedSubject changes
       if (props.dataType === "film") {
-        if (selectedSubject.value !== "ALL") {
+        console.log(
+          "selecting FILM Subject",
+          " role is ",
+          selectedYear.value,
+          " subject film  selected ",
+          newSubject.toLowerCase()
+        );
+
+        if (selectedSubject.value !== "ALL" && !resetFilmSubject) {
+          selectedYear.value = "SELECT";
+          resetFilmSubject = true;
           filteredRecords.value = props.records.filter((record) => {
-            console.log(
-              "oldSubject",
-              oldSubject.toLowerCase(),
-              "   newSubject",
-              newSubject.toLowerCase(),
-              record.fields.Tags?.includes(newSubject.toLowerCase())
-                ? "true"
-                : "false",
-              record.fields.Tags
+            return record.fields?.Tags?.some(
+              (tag) => tag.toLowerCase() === newSubject.toLowerCase()
             );
-            return record.fields.Tags?.includes(newSubject.toLowerCase());
           });
-        } else {
-          console.log(" WE ARE AT ALL", props.records);
+        }
+        if (
+          selectedSubject.value === "ALL" &&
+          selectedYear.value === "SELECT"
+        ) {
           filteredRecords.value = props.records;
         }
+        resetFilmSubject = false;
       }
     });
 
     watch(selectedYear, async (newYear, oldYear) => {
+      document.getElementById("searchField").value = "";
+
       if (props.dataType === "film") {
-        if (selectedYear.value !== "SELECT") {
+        if (selectedYear.value !== "SELECT" && !resetFilmSubject) {
+          selectedSubject.value = "ALL";
+          resetFilmYear = true;
           filteredRecords.value = props.records.filter((record) => {
             return record.fields["Name (from Year)"]?.includes(
               newYear.toString()
             );
           });
-          console.log(" FOUND BASED ON YEAR ", filteredRecords.value);
-        } else {
-          console.log("WE ARE AT YEAR SELECT", props.records);
+        }
+        if (
+          selectedSubject.value === "ALL" &&
+          selectedYear.value === "SELECT"
+        ) {
           filteredRecords.value = props.records;
         }
+        resetFilmSubject = false;
       }
     });
 
