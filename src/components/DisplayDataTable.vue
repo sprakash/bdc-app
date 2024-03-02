@@ -52,13 +52,14 @@
     <div class="w-full">
       <v-card-title>
         <v-text-field
-          v-model="search"
           label="Search"
           single-line
           hide-details
           prepend-inner-icon="mdi-magnify"
           variant="outlined"
-        ></v-text-field>
+          @keyup="filterBySearch"
+          id="searchField"
+        />
       </v-card-title>
       <v-card v-transition="{ name: 'v-fade-transition' }" flat>
         <v-row class="text-center px-4 align-center" wrap>
@@ -72,7 +73,6 @@
       </v-card>
       <v-data-table
         :headers="headers"
-        :search="search"
         :items="currentPageRecords"
         itemKey="fields.Name"
         hide-default-footer
@@ -262,23 +262,43 @@ export default {
       return "testing";
     };
     //search
-    const filterBySearch = (record) => {
-      // Implement your specific search logic here
-      const searchText = search?.value.toLowerCase();
 
+    const filterBySearch = (event) => {
+      selectedFilmmakerSubject.value = "ALL";
+      selectedRole.value = "SELECT";
+      const searchText = event.target.value.toLowerCase();
+      console.log(
+        event.target.value,
+        " and in lower ",
+        searchText,
+        "  FILTER BY SEARCH",
+        props.records
+      );
       if (props.dataType === "filmmaker") {
-        return (
-          record.fields.Name.toLowerCase().includes(searchText) ||
-          record.fields.Bio.toLowerCase().includes(searchText) ||
-          record.fields.Summary.toLowerCase()
-          // ... other fields to search in
-        );
+        // props.records.map((record) => {
+        //   console.log(record.fields.Name.toLowerCase());
+        // });
+
+        filteredRecords.value = props.records.filter((record) => {
+          return (
+            record.fields.Name.toLowerCase().includes(searchText) ||
+            record.fields.Bio.toLowerCase().includes(searchText) ||
+            record.fields["Name (from Roles)"]?.includes(searchText) ||
+            record.fields["Name (from Roles)"]?.includes(
+              searchText.toUpperCase()
+            ) ||
+            record.fields["Name (from Roles)"]?.includes(event.target.value) ||
+            record.fields["Subject of Films"]?.includes(searchText)
+          );
+        });
+        console.log(filteredRecords.value.length);
       } else {
-        return (
-          record.fields.Name.toLowerCase().includes(searchText) ||
-          record.fields.Summary.toLowerCase().includes(searchText)
-          // ... other fields to search in
-        );
+        filteredRecords.value = props.records.filter((record) => {
+          return (
+            record.fields.Name.toLowerCase().includes(searchText) ||
+            record.fields.Summary.toLowerCase().includes(searchText)
+          );
+        });
       }
     };
 
@@ -353,6 +373,8 @@ export default {
     let resetFilmmakerSubjectSelection = false;
 
     watch(selectedFilmmakerSubject, async (newSubject, oldSubject) => {
+      document.getElementById("searchField").value = "";
+
       // Update filteredRecords when selectedSubject changes
       if (props.dataType === "filmmaker") {
         console.log(
@@ -389,6 +411,8 @@ export default {
     });
     watch(selectedRole, async (newRole, oldRole) => {
       if (props.dataType === "filmmaker") {
+        document.getElementById("searchField").value = "";
+
         console.log(
           "selecting Role",
           " subject is ",
@@ -491,6 +515,7 @@ export default {
       uniqueRoles,
       navigateToFilmDetail,
       navigateToFilmmakerDetail,
+      filterBySearch,
     };
   },
 };
